@@ -1,0 +1,34 @@
+# secrets / credentials - never commit (global CLAUDE.md §9: secrets by location only)
+*.env
+.env
+.env.*
+secrets/
+*.key
+*.pem
+id_*
+.mcp.json
+.credentials.json
+
+# machine-local Claude Code state
+.claude/settings.local.json
+.claude/agent-memory-local
+
+# per-host config and installer downloads
+*.local.json
+*.local.conf
+downloads/
+cache/
+*.deb
+*.AppImage
+*.tar.gz
+*.tgz
+*.zip
+
+# logs / editor / OS noise
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
