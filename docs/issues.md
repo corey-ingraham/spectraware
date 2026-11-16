@@ -1,7 +1,21 @@
 # Issues
 
 Newest first. `### ISSUE-NNN — title · status (date)` · status ∈ {planned, in-progress, done, deferred}.
-`ISSUE-NNN` and `RM-NNN` share one counter — next free: **005**. (002 was withdrawn: not a SpectraWare issue.)
+`ISSUE-NNN` and `RM-NNN` share one counter — next free: **006**. (002 was withdrawn: not a SpectraWare issue.)
+
+### ISSUE-005 — SpectraWare crashes when the R6000 is behind a USB hub chip · done (2026-11-16)
+
+SpectraWare crashed repeatedly: when the reference level was changed, and right after pause → new centre/span
+→ restart. Three `spectraware-server` crash reports (SIGSEGV in `libtrf.so` `SpikeReceiver::run` and
+`SpectrumFrame` copy; SIGABRT). The server log, still in memory in the core dumps, showed the
+same chain each time: `libusb_bulk_transfer ... LIBUSB_ERROR_TIMEOUT`, `*IDN?` no response, `*RST` failed,
+"device not responding", then the crash. The kernel saw no USB disconnect. The R6000 was on a USB-A→C adapter
+that enumerates as a 1-port VIA Labs USB 3.0 hub (`2109:0211`). With a passive adapter (R6000 directly on
+the root port, `lsusb -t` shows no `Class=Hub` above it) the same steps ran without a crash.
+
+- Cause: the hub chip stalls sustained high-rate bulk transfers. thinkRF bug, still present: the server
+  crashes instead of reporting a lost device, and a stalled R6000 needs a power cycle.
+- Fix: `--check` now warns when the R6000 is behind a hub; README troubleshooting entry.
 
 ### ISSUE-004 — open SpectraWare window shows a blank box in the taskbar · done (2026-11-16)
 

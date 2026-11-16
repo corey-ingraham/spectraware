@@ -2,6 +2,11 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — `--check` warns when the R6000 is behind a USB hub [ISSUE-005]
+
+- [lib/common.sh](../lib/common.sh): hub detected from the sysfs device name (`2-1.1` vs `2-3`).
+- [ISSUE-005](issues.md): crashes traced to an adapter with a hub chip; README troubleshooting entry.
+
 ## 2026-11-16 — taskbar shows the thinkRF logo on the open window [ISSUE-004]
 
 - [desktop/](../desktop/): `spectraware-window-icon` login helper (python3 stdlib + libX11, event-driven) sets

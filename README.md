@@ -55,6 +55,9 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
   application menu, which survives reinstalls.
 - **Blank white box instead of the logo on the open window:** the icon helper starts at login; log out and
   back in after installing (or run `/usr/local/lib/spectraware/spectraware-window-icon &`).
+- **SpectraWare crashes when you change settings or restart a capture:** check `./install.sh --check` for a
+  "connected through a USB hub" warning. Many USB-C adapters and docks contain a hub chip that stalls the
+  R6000's data stream; use a direct connection or a passive adapter, and power-cycle the R6000 after a stall.
 - **High CPU from `spectraware-server`:** normal while SpectraWare is open.
 - **`--check` says the server is "neither listening nor connected":** quit SpectraWare and start it again.
 - **R6000 not found:** `lsusb -d 3830:5301` should list it. Use a USB 3 port directly on the computer and

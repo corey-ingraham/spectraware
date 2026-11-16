@@ -127,6 +127,11 @@ run_check() {
         elif [ -r "$node" ] && [ -w "$node" ]; then ok "$(cat "$d/product" 2>/dev/null || echo R6000) on USB, readable+writable by $(id -un) ($(cat "$d/speed") Mb/s)"
         else fail "R6000 found but $node is not read/write for $(id -un) - unplug and replug it"; bad=1; fi
         [ "$(cat "$d/speed")" -ge 5000 ] || warn "R6000 is on a USB 2 link ($(cat "$d/speed") Mb/s) - use a USB 3 port for full data rate"
+        # sysfs name is <bus>-<port>[.<port>...]; a dot means a hub in between (incl. adapters
+        # and docks with a hub chip). One made streaming stall and SpectraWare crash (ISSUE-005).
+        case "$(basename "$d")" in
+            *.*) warn "R6000 is connected through a USB hub (adapter or dock with a hub chip) - streaming can stall and crash SpectraWare; connect it directly or use a passive adapter" ;;
+        esac
     fi
 
     if [ -n "$v" ]; then check_server || bad=1; fi

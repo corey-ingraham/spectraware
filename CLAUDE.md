@@ -70,6 +70,8 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 - Dead taskbar launcher = pin to a deleted `.desktop` copy; re-pin from the menu.
 - Client window: no icon of its own, `WM_CLASS` `S1000_Client`; helper sets icon.
 - `xprop -set` truncates lists at 64 values; set big properties via libX11 ctypes.
+- Hub chip in USB-C adapter stalls streaming → server crashes; check sysfs name for a dot.
+- Crash cause is in core dump strings: server log ring buffer survives there.
 - Containers see host `/sys` USB devices but not `/dev/bus/usb` nodes.
 - `.deb` exceeds GitHub's 100 MB file limit — never commit it.
 

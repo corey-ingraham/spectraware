@@ -1,6 +1,6 @@
 # Roadmap
 
-Newest first. `### RM-NNN — title · status (date)`. Shares a counter with `issues.md` — next free: **005**.
+Newest first. `### RM-NNN — title · status (date)`. Shares a counter with `issues.md` — next free: **006**.
 
 ## Resume here
 
