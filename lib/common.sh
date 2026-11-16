@@ -116,16 +116,21 @@ run_check() {
     return "$bad"
 }
 
-port_open() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null; }
+# "localhost" may resolve to 127.0.0.1 or ::1 depending on the machine; the server binds whichever.
+port_open() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null || (exec 3<>"/dev/tcp/::1/$1") 2>/dev/null; }
+# The server accepts ONE client per port, then stops listening - so a healthy running app has
+# no listener on 3010/3011, only an established connection. Count that as serving.
+port_connected() { command -v ss >/dev/null 2>&1 && [ -n "$(ss -Htn state established "( sport = :$1 )" 2>/dev/null)" ]; }
+port_served() { port_open "$1" || port_connected "$1"; }
 
 # check_server: the launcher needs spectraware-server answering on 3010 and 3011.
 # If SpectraWare is already running, check its ports; otherwise start the server
-# briefly on its own, probe, and stop it again.
+# briefly on its own, probe, and stop it again. High CPU from the server is normal.
 check_server() {
     local pid i
     if pgrep -x spectraware-ser >/dev/null 2>&1 || pgrep -f 'spectraware-server --standalone' >/dev/null 2>&1; then
-        if port_open 3010 && port_open 3011; then ok "SpectraWare is running; server answering on 3010 and 3011"; return 0; fi
-        fail "spectraware-server is running but not answering on 3010/3011 (hung) - quit SpectraWare and start it again"; return 1
+        if port_served 3010 && port_served 3011; then ok "SpectraWare is running; server is serving 3010 and 3011"; return 0; fi
+        fail "spectraware-server is running but neither listening nor connected on 3010/3011 - quit SpectraWare and start it again"; return 1
     fi
     if port_open 3010 || port_open 3011; then
         fail "another program is using port 3010 or 3011 - SpectraWare's server needs both"; return 1

@@ -2,6 +2,12 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — `--check` no longer fails a running SpectraWare [ISSUE-003]
+
+- [lib/common.sh](../lib/common.sh): server ports count as served when listening on IPv4/IPv6 or already connected.
+- [ISSUE-003](issues.md) closed as a misdiagnosis: one-client-per-port and high CPU are normal.
+- [README.md](../README.md) troubleshooting: dead taskbar launcher, high CPU.
+
 ## 2026-11-16 — fresh-install test passed on a real desktop [RM-001]
 
 - Clean 26.04 desktop, fresh clone of the public repo, no local `.deb`: `./install.sh` downloaded from thinkRF,

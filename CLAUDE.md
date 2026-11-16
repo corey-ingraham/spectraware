@@ -65,7 +65,9 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 - `dpkg-query` exits 1 for unknown packages — kills `pipefail` substitutions; guard with `|| true`.
 - `spectraware-server` is Qt: headless runs need `QT_QPA_PLATFORM=offscreen`.
 - Noble `.deb` installs on 26.04: apt resolves `libqt5*`/`libasound2` via `t64` Provides.
-- SpectraWare server can hang (100% CPU, ports closed) after R6000 unplug — restart app.
+- Server takes one client per port then stops listening; ~100% CPU is normal.
+- Probe localhost on both 127.0.0.1 and ::1 — binding varies by machine.
+- Dead taskbar launcher = pin to a deleted `.desktop` copy; pin the `/usr/share` one.
 - Containers see host `/sys` USB devices but not `/dev/bus/usb` nodes.
 - `.deb` exceeds GitHub's 100 MB file limit — never commit it.
 

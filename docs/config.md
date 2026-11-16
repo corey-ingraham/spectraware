@@ -40,7 +40,7 @@ Derivatives (Mint, Pop!_OS…) are mapped by `UBUNTU_CODENAME`. Other releases n
 
 | Port | Proto | Where | What |
 |---|---|---|---|
-| 3010, 3011 | TCP | localhost | `spectraware-server` ↔ client (launcher checks both) |
+| 3010, 3011 | TCP | localhost (IPv4 or IPv6) | `spectraware-server` ↔ client; one client per port, the listener closes once connected |
 | 37001 / 37000 | TCP | R6000 | SCPI control / VRT data |
 | 4880 / 4881 | TCP | R6000 | HiSLIP control / data |
 | 18331 | UDP | broadcast | device discovery ([Programmer's Guide](manuals/R6000-programmers-guide-75-0055.txt) "Discovery Using Broadcast UDP") |

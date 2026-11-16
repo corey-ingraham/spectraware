@@ -49,9 +49,11 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
 
 ## Troubleshooting
 
-- **`--check` says the server is "running but not answering":** SpectraWare is hung. This has been seen
-  after unplugging the R6000 while the app was open ([ISSUE-003](docs/issues.md)). Quit SpectraWare and
-  start it again.
+- **Taskbar / desktop icon does nothing:** a pinned launcher can point at a copy of `spectraware.desktop`
+  that has since been deleted (e.g. the Desktop icon). Remove the pin and re-pin **Spectraware** from the
+  application menu, which uses `/usr/share/applications/spectraware.desktop` and survives reinstalls.
+- **High CPU from `spectraware-server`:** normal while SpectraWare is open.
+- **`--check` says the server is "neither listening nor connected":** quit SpectraWare and start it again.
 - **R6000 not found:** `lsusb -d 3830:5301` should list it. Use a USB 3 port directly on the computer and
   check that the device has finished booting (status LED, see the [User Guide](docs/manuals/R6000-user-guide-75-0054.pdf)).
 - **"USB 2 link" warning:** move it to a USB 3 port. USB 3 carries 1550 Mbps against 720 Mbps on Gigabit
