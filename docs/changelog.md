@@ -2,6 +2,11 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — ready-made profiles: Wi-Fi 2.4/5/6/all + Bluetooth
+
+- [profiles/](../profiles/): SpectraWare Save Settings files, load with File → Load Settings on any R6000.
+- [wifi.md](wifi.md): Bluetooth section (classic vs BLE, advertising channels), profile list.
+
 ## 2026-11-16 — Wi-Fi monitoring guide
 
 - [wifi.md](wifi.md): Save/Load Settings profiles for 2.4, 5, 6 GHz and all bands, display settings,

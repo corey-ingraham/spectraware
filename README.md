@@ -50,7 +50,8 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
 
 ## Using it
 
-Watching Wi-Fi (2.4, 5, 6 GHz) and saving each setup as a profile: [docs/wifi.md](docs/wifi.md).
+Watching Wi-Fi (2.4, 5, 6 GHz) and Bluetooth, with ready-made profiles in [profiles/](profiles/)
+(File → Load Settings): [docs/wifi.md](docs/wifi.md).
 
 ## Troubleshooting
 
