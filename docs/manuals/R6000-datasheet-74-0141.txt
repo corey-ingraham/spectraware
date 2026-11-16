@@ -1,0 +1,261 @@
+Preliminary Product Brochure and Technical Datasheet
+
+
+
+thinkRF R6000
+                            TM
+
+
+
+Real-Time Spectrum Analyzer
+
+
+
+
+             9 kHz to 8 GHz RTSA in smaller size
+
+
+
+
+     COMPACT &                          HIGH             HIGH SPEED
+   LOW FOOTPRINT                    PERFORMANCE         NETWORKING
+                                                         CAPABILITY
+    184 x 165 x 60 mm                Super-heterodyne   USB 3.0, ethernet,
+     (7.2” x 6.5” x 2.4“)              radio design      PCIe interfaces
+       2.2 kg (4.8 lbs)
+
+
+
+
+www.thinkrf.com
+          OVERVIEW
+
+               R6000
+        Real-Time Spectrum
+              Analyzer
+          in smaller size
+
+
+    Compact, fanless, networked
+    and remote deployable real-time                 The performance of traditional
+    spectrum analyzers with GNSS
+                                                    lab-grade spectrum analyzers
+                    1                               at a fraction of the cost, size,
+                                                    weight and power consumption.
+        Wi-Fi 6E ready, 9 kHz to 8 GHz
+                                                thinkRFTM makes the              real-time digitization and
+                                                cost-effective testing and       digital signal processing. This
+                    2                           monitoring of billions of        enables wide bandwidth, deep
+                                                wireless devices possible.       dynamic range and 8 GHz
+                  100 MHz                       Using innovative software-       frequency range in a small,
+       Instantaneous Bandwidth (IBW)
+                                                defined radio technologies,      one-box, stylish platform.
+                                                the thinkRF R6000 Real-          Designed for stand-alone,
+                    3                           Time Spectrum Analyzer with      outdoor, mobile, remote and/
+                                                GNSS has the performance of      or distributed wireless signal
+        65 GHz/s @ 10 kHz RBW                   traditional lab-grade spectrum   analysis, the R6000 analyzer
+             Sweep Rate                         analyzers at a fraction of the   can be deployed as a single
+                                                cost, size, weight and power     unit or a network of radio
+                    4                           consumption.                     sensors, making it ideal for
+                                                The sleek, lightweight, and      monitoring, management and
+        23 W @ 12V input power                  fanless thinkRF R6000            surveillance of transmitters,
+             consumption                        analyzer provides the benefits   whether they are in-building or
+                                                of a high-performance            spread across a geographic
+                    5                           software-defined RF receiver,    area. The Low SWaP (size
+                                                digitizer and analyzer along     weight and power) - designed
+           184 x 165 x 60 mm
+                                                with integrated GNSS             for easy integration into a
+            (7.2” x 6.5” x 2.4“)
+                 Compact                        technology offering location     wide range of applications
+                                                and time information.            including:
+                    6                           The R6000 Real-Time              • Spectrum Monitoring
+                                                Spectrum Analyzer is based       • Signals Intelligence
+             2.2 kg (4.8 lbs)                   on an optimized software-        • Test Equipment
+                  Light                         defined radio receiver           • RF Scanners
+                                                architecture coupled with
+
+2 | R6000 | Preliminary Product Brochure and Technical Datasheet
+ APPLICATIONS
+ R6000 Real-Time Spectrum Analyzer (RTSA)
+ S1000 Spectraware Real-Time Spectrum Analysis Application Software
+ The thinkRFTM S1000 Spectraware software harnesses the power of the thinkRF Real-Time Spectrum
+ Analyzers to provide all the visualization capabilities you’d expect, while still being cost-effective and
+ easy to use. The intuitive graphical user interface (GUI) has been designed with the end-user in mind,
+ focusing on center, span, start and stop coupled mode rather than on RFE mode as its primary control
+ model, simplifying the user experience and keeping the view of the spectrum front and center.
+
+ AUTOMATIC MEASUREMENTS
+ The S1000 supports two standard measurements that are
+ critically important for users analyzing modern devices and
+ signals such as Wi-Fi, Bluetooth, and cellular standards
+ such as 3G/4G/5G/LTE.
+ The Channel Power measurement determines the power
+ contained within a channel bandwidth. The Occupied
+ Bandwidth measurement determines the bandwidth
+ which contains a percentage of the total integrated power
+ of the signal, centered on the assigned channel frequency.
+
+ DEMODULATION FOR DEEPER SIGNAL
+ ANALYSIS
+ Conduct both spectrum and signal analysis and extract
+ the original information-bearing signal from the carrier
+ wave with demodulation capabilities. Gapless streaming
+ allows seamless playback of demodulated audio which
+ can be amplified from 0% - 300%. View Constellation,
+ Frequency Domain, and Time Domain graphs in the clean,
+ professional interface and record and play back streams
+ with full demodulation and graphing support.
+
+ PERFORMANCE YOU NEED
+ All functions have been made easily accessible in an
+ intuitive soft menu on the right-hand side of the display.
+ Commonly used settings including Amplitude, Frequency
+ and Bandwidth, are presented on the left and are always
+ available to the user.
+
+
+
+
+3 | R6000 | Preliminary Product Brochure and Technical Datasheet
+ APIS - PROGRAMMING ENVIRONMENTS
+ Unlock the Power of Real-Time Spectrum Analysis with thinkRF LibTRF API
+ The thinkRF LibTRF API is your gateway to seamless integration with the world’s most advanced real-
+ time spectrum analyzers. Designed for the thinkRF R6000 and R5xx0 series, including the cutting-edge
+ R5750, this multi-platform API library empowers developers to harness the full potential of thinkRF’s
+ spectrum analysis capabilities. Whether you are working on Windows or Linux, for x86_64 or ARM
+ architectures, the LibTRF API provides robust and flexible tools to streamline your development process
+ and elevate your signal analysis applications.
+
+ With the LibTRF API, you gain access to a suite of sophisticated signal processing features that can be
+ effortlessly integrated into your end-user applications. Imagine the possibilities with real-time AM and FM
+ demodulators, IQ to Spectrum conversion, and advanced spectrum characterization capabilities such as
+ Peak-hold and Min-hold spectra. The API also supports finite-duration spectrum capture, allowing you to
+ specify time-duration or frame-count, ensuring you capture exactly what you need.
+
+
+               Key Benefits
+               ~ Cross-Platform Compatibility: Supports both Windows and Linux, across
+                 x86_64 and ARM architectures.
+               ~ Advanced Signal Processing: Includes AM/FM demodulators, IQ to
+                 Spectrum conversion, and comprehensive spectrum characterization tools.
+               ~ User-Friendly Integration: Designed to be easily integrated into your
+                 applications, enhancing development efficiency and capability.
+
+
+ Experience the future of spectrum analysis with thinkRF’s LibTRF API, and transform the way you handle
+ complex signal processing tasks.
+
+
+
+
+4 | R6000 | Preliminary Product Brochure and Technical Datasheet
+ RF and Digitization Specifications
+   Frequency
+   Frequency Ranges                                   9 kHz to 8 GHz
+   Frequency Reference                                ±1.5 ppm                      @20°C +/- 5°C temperature
+                                                      ±0.2 ppm 0°C to 55°C          Stability over operating temp
+                                                      ±0.2 ppm per year             Aging
+   Frequency Resolution                               1 Hz
+   Instantaneous Bandwidth (IBW)                      100 MHz
+   Spurious Free Dynamic Range (SFDR)                    100 dBc
+   Non-input-related spurs (residual                  < -100 dBm
+   responses) level
+   Amplitude
+   Amplitude Accuracy (25 °C ± 5 °C)                  ± 0.9 dB typical              50 MHz to 8 GHz
+   Amplitude Flatness
+     IBW amplitude flatness                           + 1 dB p-p
+     IBW noise floor flatness                         + 1 dB p-p
+     Full freq range noise floor flatness             1 dB/GHz max deviation monotonic across 9 kHz to 8 GHz
+   Maximum Safe RF Input Level                        +20 dBm, Max DC: 10V
+
+   Displayed Average Noise Level (DANL | at 25 °C ± 5 °C, typical)
+   Preamplifier ON                                    < - 160 dBm/Hz
+   Preamplifier OFF                                   < - 150 dBm/Hz
+
+   Third Order Intercept Point (IP3)
+   Preamplifier ON                                    + 12 dBm
+   Preamplifier OFF                                   + 19 dBm
+
+   Spectral Purity
+   Phase Noise                               Offset
+   25°C ± 5°C at 1GHz                        10 kHz                -130 dBc/Hz (OCXO Option)
+   Digitization
+   Data Sampling Rate                                 491.52 MSa/s                  Resolution 14 bit
+   Digital IQ Output Sample Rate                      122.88 MSa/s
+   Ethernet I/F
+   Sweep Rate                                         65 GHz/s @ 10 kHz RBW         100 MHz IBW
+   Data Transfer Rate                                 695 Mb/s (Max)
+   USB I/F
+   Sweep Rate                                         100 GHz/s @ 10KHz RBW 100MHz IBW
+   Data Transfer Rate                                 1.2Gb/s Max
+
+
+
+
+5 | R6000 | Preliminary Product Brochure and Technical Datasheet
+ Global Navigation Satellite System (GNSS)
+   Global Positioning System (Concurrent reception of up to 2 GNSS)
+   GNSS Types supported                                      GPS, GLONASS, BeiDou
+   GNSS Antenna Power                                        3.3 V, 50 mA
+   Time to first fix, maximum                                From 2 sec (hot) to 36 sec (cold start), -130 dBm input signal
+                                                             power
+   Horizontal positional accuracy                            GPS &       GPS &         GPS             GLONASS BeiDou
+   (CEP, 50%, 24 hours Static, -130 dBm,                     GLONASS BeiDou
+   >6 SVs)                                                   2.5 m       2.5 m         2.5 m           4.0 m      3.0 m
+
+   Data Timestamp Resolution                                 +/- 5 ns
+
+
+ General Specifications
+   Connectors
+   RF In                                                     SMA female, 50 Ω
+   10 MHz Reference In and Out                               SMA female, 50 Ω
+   Ethernet                                                  RJ45
+   USB Port                                                  3
+   GPIO                                                      15-pin female D-Subminiature
+   GNSS Antenna Port                                         SMA female, 50 Ω (Active 3.3VDC)
+   Power                                                     LEMO Connector, 4 pin female
+   Status Indicators
+   10 MHz reference clock status
+   Ethernet Link
+   Power Status
+   Power
+   Physical Power Supply                                     Use AC Wall Power Adaptor      Input AC 120V-240V /
+                                                             provided                       Output +12V
+   Power Consumption                                         18W with Power Adaptor         At room temperature
+                                                             provided
+   Physical
+   Operating Temperature Range                               -10°C to +55°C
+   Storage Temperature Range                                 -51°C to +85°C
+   Relative Humidity*                                        5 to 95±5 %
+   Dimensions                                                184 x 165 x 60 mm
+                                                             (7.2” x 6.5” x 2.4“)
+   Weight                                                    2.2 kg (4.8 lbs)
+   *available with optional MIL-PRF-28800 F complaint case
+
+
+
+
+6 | R6000 | Preliminary Product Brochure and Technical Datasheet
+                                                                 thinkRF R6000
+                                                                                                                       TM
+
+CONTACT US TODAY
+                                                                 Real-Time Spectrum Analyzer
+
+
+
+
+                             sales@thinkrf.com                                               +1-613-271-5451
+
+
+
+                                                                                                                                                                                 74-0141-250314
+© thinkRF Corp., Ottawa, Canada
+Trade names are trademarks of the owners
+These specifications are preliminary, non-warranted, and subject to change without notice.
+Intellectual Property - Patents
+The thinkRF R6000 product line is protected by patents, (US8,675,781, US9,197,260, US9,350,404, US8,886,794) in the United States. This information is provided to satisfy
+the patent marking provisions including, but not limited to, the patent marking provisions of the America Invents Act (AIA) and is intended to serve as notice under 35 U.S.C.
+§ 287(a), as amended by Section 16 of the AIA. Additional patents may be pending in the United States and/or elsewhere.
+

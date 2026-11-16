@@ -1,12 +1,17 @@
 {
-  "autoMemoryDirectory": "~/OneDrive/claude-config/memory/spectraware",
   "permissions": {
     "allow": [
       "Bash(bash -n *)",
       "Bash(shellcheck *)",
+      "Bash(./install.sh --check)",
+      "Bash(./install.sh --print-commands*)",
+      "Bash(./uninstall.sh --print-commands)",
+      "Bash(tests/smoke.sh*)",
+      "Bash(lsusb*)",
       "Bash(lsb_release *)",
       "Bash(dpkg -l*)",
       "Bash(dpkg -s *)",
+      "Bash(dpkg-query *)",
       "Bash(apt-cache policy *)",
       "Bash(systemctl status *)",
       "Bash(systemctl is-active *)"

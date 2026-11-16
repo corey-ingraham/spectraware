@@ -1,0 +1,5 @@
+# Installed by spectraware/install.sh.
+# The thinkRF R6000 exposes a USB serial (CDC-ACM) port. ModemManager treats new ttyACM ports as
+# possible modems and probes them; this tells it to leave the R6000 alone. Matches the device and,
+# through ATTRS, its child tty. Must sort before ModemManager's 80-mm-candidate.rules.
+ACTION!="remove", ATTRS{idVendor}=="3830", ATTRS{idProduct}=="5301", ENV{ID_MM_DEVICE_IGNORE}="1"

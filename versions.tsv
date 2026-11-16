@@ -1,0 +1,6 @@
+# SpectraWare builds this installer knows. Newest version first; one row per (version, build).
+# Files come straight from thinkRF (https://support.thinkrf.com/support/solutions/folders/36000272741).
+# sha256 is verified before anything is installed. Columns are TAB-separated.
+# version	build	sha256	url
+1.4.0.4	noble	9624d279cfe6c4baad00840e5fe69bf71e605f240058f17bd79cdd8677f5db7b	https://s3.us-east-1.amazonaws.com/ThinkRF/s1000/spectraware-1.4.0.4-RTSA-noble.deb
+1.4.0.4	jammy	c20e6e06440df7255dacf7dbbc3b31b2dd8af8c9ca458e237c6458d57d00aea8	https://s3.us-east-1.amazonaws.com/ThinkRF/s1000/spectraware-1.4.0.4-RTSA-jammy.deb

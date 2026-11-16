@@ -1,0 +1,18 @@
+name: lint
+on:
+  push:
+  pull_request:
+jobs:
+  shellcheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: bash -n
+        run: for f in install.sh uninstall.sh lib/common.sh tests/smoke.sh; do bash -n "$f"; done
+      - name: shellcheck
+        run: shellcheck -x install.sh uninstall.sh lib/common.sh tests/smoke.sh
+      - name: versions.tsv is well-formed
+        run: |
+          grep -v '^#' versions.tsv | awk -F'\t' 'NF!=4 || $3 !~ /^[0-9a-f]{64}$/ || $4 !~ /^https:\/\// {print "bad row " NR ": " $0; bad=1} END {exit bad}'
+      - name: --print-commands runs on a clean runner
+        run: ./install.sh --print-commands

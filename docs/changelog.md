@@ -2,22 +2,26 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — installer: install.sh, uninstall.sh, smoke test [RM-001]
+
+- [install.sh](../install.sh) / [uninstall.sh](../uninstall.sh) / [lib/common.sh](../lib/common.sh): find or download
+  thinkRF's package, verify sha256, list every change with its command, confirm, run, `--check`.
+- [versions.tsv](../versions.tsv): 1.4.0.4 noble + jammy URLs and checksums.
+- [rules/70-thinkrf-modemmanager.rules](../rules/70-thinkrf-modemmanager.rules): ModemManager ignores the R6000.
+- [tests/smoke.sh](../tests/smoke.sh): passes on 22.04, 24.04, 26.04.
+- Added the R6000 Datasheet (74-0141) and streaming app note (74-0142) to [manuals/](manuals/README.md).
+- Removed user- and host-specific content; Claude memory wiring moved to the git-ignored `.claude/settings.local.json`.
+- Logged [ISSUE-003](issues.md) (server hang after USB unplug).
+
 ## 2026-11-16 — installer plan drafted [RM-001]
 
-- [plans/rm-001-installer.md](plans/rm-001-installer.md): facts from the `.deb` and manuals, 4 phases, 4 open questions.
-- [config.md](config.md): `.deb` sha256, port table; noble package verified installed on 26.04.
+- [plans/rm-001-installer.md](plans/rm-001-installer.md): facts from the `.deb` and manuals, phases, open questions.
 
 ## 2026-11-16 — thinkRF manuals added; public GitHub repo
 
-- [docs/manuals/](manuals/README.md): R6000 User Guide (75-0054) and Programmer's Guide (75-0055), PDF + `pdftotext -layout` text.
-- Linked from [CLAUDE.md](../CLAUDE.md), [architecture.md](architecture.md), [config.md](config.md).
-- SpectraWare 1.4.0.4 package facts recorded in [config.md](config.md); `.deb` stays out of git.
+- [docs/manuals/](manuals/README.md): R6000 User Guide (75-0054) and Programmer's Guide (75-0055), PDF + text.
 - Published as public repo `corey-ingraham/spectraware`.
 
 ## 2026-11-16 — repo scaffolded
 
-- Scaffold from `claude-config/repo-template.md`: [CLAUDE.md](../CLAUDE.md), `docs/` registers,
-  [.gitignore](../.gitignore), [.claude/settings.json](../.claude/settings.json).
-- `autoMemoryDirectory` wired to `~/OneDrive/claude-config/memory/spectraware`; bucket created.
-- Host wired to claude-config (`linux/setup-on-linux.sh`): statusline, hooks, global `CLAUDE.md`,
-  agents, skills, memory, docs.
+- [CLAUDE.md](../CLAUDE.md), `docs/` registers, [.gitignore](../.gitignore), [.claude/settings.json](../.claude/settings.json).

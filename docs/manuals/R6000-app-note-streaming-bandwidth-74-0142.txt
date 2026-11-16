@@ -1,0 +1,178 @@
+Application Note
+74-0142-260401
+
+
+
+
+Optimizing Streaming Bandwidth
+for Contiguous Capture with
+R6000
+This application note explains how to leverage onboard signal processing functionality in thinkRF
+R6000 Real-Time Spectrum Analyzer (RTSA) to achieve the best possible streaming bandwidth with
+contiguous data packets. It further explains how the settings permit the trade-off between sample
+depth, bandwidth and dynamic range as required in the user’s application.
+Table of Contents
+Overview .................................................................................................................................... 3
+Sample Size and Decimation ..................................................................................................... 4
+Optimizing Signal Performance for Reduced Sample Size ......................................................... 5
+Data Format Commands ............................................................................................................ 7
+Contact us for more information ................................................................................................. 8
+
+
+
+
+APPNOTE 74-0142-260410                                         thinkrf.com                                                             2 of 8
+Overview
+thinkRF’s R6000 RTSA supports streaming at rates up to
+
+   •   720 Mbps with 1GigE interface.
+   •   1550 Mbps with USB3 interface.
+Such high speeds allow for wider streaming bandwidth of up to 25 MHz IFBW with contiguous
+data.
+For the ethernet connection, however, achieving speeds this high requires a network infrastruc-
+ture and host computer system to sustain continuous data transfer at 500 Mbps or greater. A
+network or computer system bottleneck will effectively reduce the maximum contiguous stream-
+ing bandwidth.
+See Table 1 to determine whether the output data configuration will be contiguous for a given
+network bandwidth. To determine the contiguousness of the received data, RTSA data packets
+provide a ‘discontinuity’ indicator bit which identifies for any data dropped between the received
+packets. thinkRF’s libtrf API provides an example code to illustrate the usage.
+
+
+
+
+APPNOTE 74-0142-260410                      thinkrf.com                                      3 of 8
+Sample Size and Decimation
+As the RTSA has an IQ sample rate of 122.88 MHz and a 14-bit ADC, its connection interface
+will not be able to keep up with the rate at which data is produced. To achieve the best possible
+streaming bandwidth, it will often be necessary to reduce the size of data samples. If the total
+bitrate for a given configuration exceeds the maximum transfer rate of the R6000, the output
+data stream will contain discontinuities between data packets (not within the packets).
+Table 1 shows whether the output data stream can be continuous for a given configuration.
+Table 1: R6000 configurations for streaming data continuity
+ Decimation        Usable        Sample Size     Data Bitrate       Ethernet          USB
+    Rate         Bandwidth         (bits)         (Mbps)+         Contiguous?      Contiguous?
+               (IFBW, MHz)*
+      1             98.3              16             3932              No               No
+                                      12             2949              No               No
+                                      10             2458              No               No
+                                      8              1967              No               No
+      2             49.2              16             1966              No               No
+                                      12             1475              No               Yes
+                                      10             1229              No               Yes
+                                      8              983.0             No               Yes
+      4             24.6              16             983.0             No               Yes
+                                      12             737.3             No†              Yes
+                                      10             614.4             Yes              Yes
+                                      8              491.5             Yes              Yes
+      5             19.7              16             786.4             No               Yes
+                                      12             589.8             Yes              Yes
+                                      10             491.5             Yes              Yes
+                                      8              393.2             Yes              Yes
+      8             12.3              16             491.5             Yes              Yes
+                                      12             368.6             Yes              Yes
+                                      10             307.2             Yes              Yes
+                                      8              245.8             Yes              Yes
+     […]                                                 […]
+     512            0.192             16              7.68             Yes              Yes
+                                      12              5.76             Yes              Yes
+                                      10                 4.8           Yes              Yes
+                                      8               3.84             Yes              Yes
+
+
+Notes:
+* The “Usable Bandwidth” is calculated using 80% rule of the sample rate 122.88 MHz divided
+by the decimation rate.
++
+  The “Data Bitrate” is calculated using the full operating BW (sample rate ÷ decimation rate),
+not the usable
+†
+  This streaming configuration might be achievable without discontinuity if your system could
+sustain the bitrate of 740 Mbit/sec (Mbps) or higher.
+
+APPNOTE 74-0142-260410                     thinkrf.com                                        4 of 8
+Optimizing Signal Performance for Reduced Sample Size
+When input samples are truncated using :SOURce:DIGital:DATA:SIZE {8 | 10 | 12},
+it is crucial to select the appropriate reference level for the input signal. The R6000 automati-
+cally recenters incoming samples in the output sample size according to the system configura-
+tion. Quantitatively, this effect varies depending on the contents of the input signal of interest. A
+series of examples using an input tone is shown below.
+If the selected input reference level is much higher than the input signal, the resulting data sam-
+ples occupy fewer of the available bits. In this scenario, the resulting signal is distorted due to
+quantization. The result is that dynamic range is effectively much lower.
+
+
+
+
+ Figure 1: Using an input reference level too high for the selected sample depth has a significant impact on dynamic
+                                             range for small sample sizes.
+
+
+Note that this effect is much less severe when larger samples are used. For example, Figure 2
+shows the same configuration but with 16-bit sample depth.
+
+
+
+
+     Figure 2: The impact of using a high input reference level is significantly reduced with 16-bit sample depth.
+
+
+
+APPNOTE 74-0142-260410                              thinkrf.com                                                  5 of 8
+Selecting an appropriate reference level for the input signal results in output data samples cen-
+tered within the available bits, which will provide the best possible result for small sample sizes.
+An example of small sample sizes with an appropriately chosen input reference level is shown
+in Figure 3.
+
+
+
+
+Figure 3: Signals can still be resolved when using small samples if an appropriate input reference level is used, since
+                                  it effectively centers the signal in the output samples.
+
+Selecting an input reference lower than the input signal will likely result in the output data sam-
+ples being saturated, since the values are too large to represent in the available bits. An exam-
+ple of output samples saturating for 8-bit sample depth because of inappropriate input reference
+level selection is shown in Figure 4.
+
+
+
+
+    `
+   Figure 4: For small samples, output samples may saturate due to inappropriate input reference level selection.
+
+
+
+
+APPNOTE 74-0142-260410                              thinkrf.com                                                 6 of 8
+Data Format Commands
+The following SCPI commands affect the required bandwidth for the output data stream:
+
+   •   [:SENSe]:DECimation (or SWEep:ENTRy:DECimation)
+
+   •   SOURce:DIGital:DATA:SIZE
+Please refer to the R6000 Programmer’s Guide for more information.
+Note: Users of libtrf API do not have to manually set the decimation. For the sample depth (size), use
+‘TRFBitPacking’ parameter.
+
+
+
+
+APPNOTE 74-0142-260410                       thinkrf.com                                        7 of 8
+Contact us for more information
+ThinkRF Support website provides online technical documents for thinkRF products at
+https://thinkrf.com/documentation/.
+For all customers who hold a valid end-user license, thinkRF provides technical assistance 9 AM to 5
+PM Eastern Time, Monday to Friday. Contact us at https://support.thinkrf.com/ or by calling
++1.613.369.5104.
+
+
+©2024 ThinkRF Corp., Ottawa, Canada, thinkrf.com
+Trade names are trademarks of the owners.
+These specifications are preliminary, non-warranted, and subject to change without notice.
+
+
+
+
+APPNOTE 74-0142-260410                       thinkrf.com                                         8 of 8
+
