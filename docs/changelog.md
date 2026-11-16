@@ -2,6 +2,13 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — thinkRF manuals added; public GitHub repo
+
+- [docs/manuals/](manuals/README.md): R6000 User Guide (75-0054) and Programmer's Guide (75-0055), PDF + `pdftotext -layout` text.
+- Linked from [CLAUDE.md](../CLAUDE.md), [architecture.md](architecture.md), [config.md](config.md).
+- SpectraWare 1.4.0.4 package facts recorded in [config.md](config.md); `.deb` stays out of git.
+- Published as public repo `corey-ingraham/spectraware`.
+
 ## 2026-11-16 — repo scaffolded
 
 - Scaffold from `claude-config/repo-template.md`: [CLAUDE.md](../CLAUDE.md), `docs/` registers,

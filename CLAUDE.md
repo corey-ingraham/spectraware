@@ -7,21 +7,29 @@ repeatably. One clone + one command should take a fresh box to a working install
 
 | Doc | Holds |
 |---|---|
+| [README.md](README.md) | public front page: what this is, prerequisites |
 | [docs/architecture.md](docs/architecture.md) | repo layout, install flow, what runs as root, trust model |
 | [docs/config.md](docs/config.md) | target hosts, paths, packages, ports, secret **locations** (never values) |
 | [docs/changelog.md](docs/changelog.md) | dated record of changes, newest first |
 | [docs/issues.md](docs/issues.md) | problem/incident log (`ISSUE-NNN`) |
 | [docs/roadmap.md](docs/roadmap.md) | planned work (`RM-NNN`) — **resume here** |
 | [docs/plans/README.md](docs/plans/README.md) | plan register (design artifacts) |
+| [docs/manuals/README.md](docs/manuals/README.md) | thinkRF R6000 User Guide + Programmer's Guide (PDF + text) |
+
+**Vendor manuals:** grep the `.txt` first, open the PDF for tables/figures —
+[User Guide](docs/manuals/R6000-user-guide-75-0054.txt) (setup, network, LEDs, specs) ·
+[Programmer's Guide](docs/manuals/R6000-programmers-guide-75-0055.txt) (SCPI, VRT streaming).
 
 ## Quick Facts
 
 | Item | Value |
 |---|---|
 | Purpose | install + configure SpectraWare on Ubuntu |
+| Hardware | thinkRF R6000 real-time spectrum analyzer (Ethernet) |
+| Package | `spectraware_1.4.0.4` amd64 `.deb` (`-RTSA-noble`), ~101 MB, not committed |
+| Remote | <https://github.com/corey-ingraham/spectraware> (public) |
 | Target OS | Ubuntu (first host: 26.04.1 LTS, user `toor`) |
 | Repo path | `~/repos/spectraware` |
-| Remote | none yet — ask before creating/pushing |
 | Language | bash (`set -euo pipefail`), no other runtime assumed |
 | Memory bucket | `~/OneDrive/claude-config/memory/spectraware` (shim → claude-config clone) |
 | Status | scaffold only; installer not written (RM-001) |
@@ -55,6 +63,8 @@ repeatably. One clone + one command should take a fresh box to a working install
 
 - No passwordless sudo on this host — hand root commands to Corey via `!`.
 - `paplay` absent on fresh Ubuntu — sound hooks silent until `pulseaudio-utils` is installed.
+- SpectraWare `.deb` exceeds GitHub's 100 MB file limit — never commit it.
+- Repo is public — no hostnames, IPs, serials, or licence data in commits.
 
 ## Response Style
 

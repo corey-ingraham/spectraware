@@ -1,0 +1,926 @@
+                               thinkRF R6000
+                          Real-Time Spectrum
+                          Analyzer with GNSS
+                                                                  User Guide
+                                                                  Version 1.0
+
+
+
+
+May 2024
+Document no. 75-0054
+Copyright © 2024 thinkRF Corporation, All rights reserved.
+All product names are trademarks of their respective companies.
+Important notice              HARDWARE WARRANTY AND LIMITATION OF LIABILITY
+The information in this
+                              Read this warranty carefully before you use the product.
+guide is furnished for
+informational use only        R6000 Real-Time Spectrum Analyzers with GNSS are warranted for workmanship
+and is subject to change      and materials for a period of one (1) year from the date of shipment as identified by
+without notice. thinkRF       the Customer’s packing slip or carrier waybill. thinkRF reserves the right to void the
+Corporation assumes no        warranty on any equipment that has been altered or damaged due to Customer
+responsibility or liability   negligence, unauthorized repair, misuse of equipment, evidence of physical or
+for any errors or             environmental damage, transportation abuse or removal of any thinkRF identification
+inaccuracies that may         labels or serial numbers.
+appear in this document.
+                              It will remain the responsibility of the Customer, having obtained a Return Material
+No part of this               Authorization (RMA) and shipping instructions from thinkRF, to return, at the
+publication may be            Customer's expense, the defective unit to thinkRF’s repair facilities. thinkRF will
+reproduced, published,        incur shipping charges for the return of warranty repaired equipment. The RMA
+stored in an electronic       number can be secured by calling thinkRF Customer Service and Support (1-613-
+database, or transmitted,     369-5104). If the product does not fall within thinkRF’s warranty period or the
+in any form or by any         product is found to be functioning as designed, then under the terms of thinkRF’s
+means, electronic,            warranty policy, all costs of repairs and shipping will be charged directly to the
+mechanical, recording,        Customer. thinkRF will warrant repaired units for a period of 90 days from date of
+or otherwise, for any         shipment from thinkRF to the Customer. If the remaining period on the original
+purpose, without the          hardware warranty is greater than 30 days, then thinkRF will honor this remaining
+prior written permission      warranty period.
+of thinkRF Corporation.
+                              THINKRF EXPRESSLY DISCLAIMS ALL OTHER WARRANTIES AND
+                              CONDITIONS, WHETHER EXPRESS OR IMPLIED, INCLUDING WITHOUT
+Trademarks                    LIMITATION, WARRANTIES, CONDITIONS OR REPRESENTATIONS OF
+                              WORKMANSHIP, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+thinkRF, the thinkRF
+                              DURABILITY, OR THAT THE OPERATION OF THE HARDWARE OR LICENSED
+logo and E300 Enabler
+                              SOFTWARE WILL BE ERROR FREE. IN NO EVENT WILL THINKRF BE LIABLE
+are trademarks of
+                              FOR INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES.
+thinkRF Corporation.
+The following are
+trademarks or registered
+trademarks of their
+                              USE OF PRODUCTS IN HIGH-RISK ACTIVITIES
+respective companies or       THINKRF PRODUCTS ARE INTENDED FOR STANDARD INDOOR COMMERCIAL
+owners:                       USE. WITHOUT THE APPROPRIATE NETWORK DESIGN ENGINEERING, THEY
+Windows, Windows XP /         MUST NOT BE USED FOR ANY “HIGH RISK ACTIVITY”, as described in this
+Microsoft Corporation         paragraph. Customer acknowledges and agrees that the products supplied
+All other brand or            hereunder are not fault-tolerant and are not designed, manufactured or intended for
+product names are             use or resale as on-line control equipment in hazardous environments requiring fail
+trademarks or registered      safe performance including but not limited to the operation of nuclear facilities,
+trademarks of their           aircraft navigation or communication systems, air traffic control, direct life support
+respective companies or       machines, or weapons systems, in which the failure of products could lead directly to
+owners.                       death, personal injury, or severe physical or environmental damage, all of which are
+                              examples of “High Risk Activity”. THINKRF AND ITS SUPPLIERS EXPRESSLY
+                              DISCLAIM ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR HIGH
+thinkRF Corp                  RISK ACTIVITIES.
+
+390 March Road
+Kanata, ON K2K 0G7            GNU General Public License
+(613) 369-5104
+                              This device contains free firmware: you can redistribute it and/or modify it under the
+                              terms of the GNU General Public License as published by the Free Software
+                              Foundation, either version 3 of the License, or (at your option) any later version. This
+                              program is distributed in the hope that it will be useful, but WITHOUT ANY
+                              WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+                              FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+                              details. GNU General Public License is available at http://www.gnu.org/licenses/.
+Table of Contents
+Preface ........................................................................................................................... 5
+          Audience ........................................................................................................................ 5
+          Conventions ................................................................................................................... 5
+          Obtaining the Latest Documentation and Software ......................................................... 5
+          Document Feedback ...................................................................................................... 5
+          Obtaining Technical Assistance ...................................................................................... 5
+
+Overview of the thinkRF R6000 .................................................................................... 7
+          Getting Familiar with R6000 ........................................................................................... 8
+
+Installing the thinkRF R6000 ...................................................................................... 10
+          Preventing Electrostatic Discharge Damage ..................................................................10
+          Unpacking the Box ........................................................................................................10
+          Choosing the Mount Location for the R6000 .................................................................. 11
+          Connecting the Antennas, Ethernet and Power Cables ................................................. 11
+
+Connecting to the R6000 ............................................................................................ 13
+          Determining Your Network Topology and IP Address Allocation .....................................13
+          Connecting Directly to the R6000 ..................................................................................14
+          Connecting to the R6000 across a Network ...................................................................16
+
+Using the R6000 Administration Console ................................................................. 17
+          Viewing Device Status ...................................................................................................17
+          Configuring R6000 Time Synchronization ......................................................................18
+          Configuring the R6000 IP Address .................................................................................19
+          Updating the R6000 Firmware .......................................................................................20
+
+Using the GNSS Module ............................................................................................. 22
+          Configuring the R6000 GNSS Module ...........................................................................22
+          Selecting the GNSS 30.72 MHz Reference Source .......................................................22
+          Getting Real-Time Geolocation Data .............................................................................22
+
+Resetting the R6000 to Factory Settings ................................................................... 23
+
+Status Indicator LEDs ................................................................................................. 24
+          Status Indicator LED......................................................................................................24
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                                                         3
+         Status RF Lock LED ......................................................................................................24
+         REF Stat LED ................................................................................................................24
+
+Hardware Reference.................................................................................................... 25
+         System Specifications ...................................................................................................25
+         SMA Connectors ...........................................................................................................25
+         Ethernet RJ-45 Port Pinout ............................................................................................26
+         GPIO Port Pinout ...........................................................................................................26
+         RJ-45 Straight-Through Ethernet Cable.........................................................................27
+         RJ-45 Crossover Ethernet Cable ...................................................................................27
+         Operational Considerations and Maintenance ...............................................................27
+Preface
+              This section describes the audience for, the organization of, and conventions used in this
+              document. It also identifies related documentation and explains how to access electronic
+              documentation.
+
+
+Audience
+              This document is written for technical people who have basic understanding, familiarity
+              and experience with network test and measurement equipment.
+
+
+Conventions
+              The following conventions and notations are used in this document:
+
+
+              Note: This symbol means take note. Notes contain helpful suggestions or references to
+              additional information and material.
+
+
+
+              Caution: This symbol means be careful. In this situation, you might do something that
+              could result in equipment damage or loss of data.
+
+
+
+              Warning: This symbol means danger. You are in a situation that could cause bodily
+              injury. Before you work on any equipment, be aware of the hazards involved with
+              electrical circuitry and be familiar with the standard practices for preventing accidents.
+
+
+
+Obtaining the Latest Documentation and Software
+              Please visit the thinkRF website at https://thinkrf.com/documentation/ to obtain the latest
+              R60000 documentation. Latest software and firmware releases are also available on the
+              thinkRF support website.
+
+
+Document Feedback
+              Please send your comments about this document or any thinkRF documentation to
+              support@thinkrf.com. We appreciate your feedback.
+
+
+Obtaining Technical Assistance
+              The thinkRF Support website provides online documents for resolving technical issues
+              with thinkRF products. Visit https://thinkrf.com/documentation/ for more information.
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                          5
+Overview of the thinkRF R6000
+
+            For all customers who hold a valid end-user license, thinkRF provides technical
+            assistance 9 AM to 5 PM Eastern Time, Monday to Friday. Contact us at
+            support@thinkrf.com or by calling +1.613.369.5104.
+            Before contacting support, please have the following information available:
+
+                •   R6000 serial number and the product version (located on the identification label
+                    on the R6000 device’s underside)
+                •   The firmware version running on the R6000
+                •   Versions of thinkRF software you are using, potentially including the API libraries
+                    to third-party applications
+                •   Operating system and version on your PC
+
+
+
+
+6                                              ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                     Overview of the thinkRF R6000
+
+
+Overview of the thinkRF R6000
+              The R6000 Real-Time Spectrum Analyzer (RTSA) with Global Navigation Satellite
+              System (GNSS) is a high-performance software-defined RF receiver, digitizer and
+              analyzer with integrated GNSS technology to offer location and time information in one
+              package.
+              It is designed for stand-alone or remote real-time spectrum analysis, providing real-time
+              triggering and loss-less capture of signals of interest. It offers industry leading combined
+              sensitivity, tuning range, instantaneous bandwidth and scan rate. It offers Gigabit
+              Ethernet connection and in the near future USB 3.1 for an even faster data transfer rate.
+
+
+
+
+              The R6000 is ideal for monitoring, management and surveillance of transmitters, whether
+              they are in-building or spread across a geographic area. Applications include spectrum
+              analysis, mobile wireless technology, research, test and measurement, spectrum
+              monitoring and OEM integration. When the GNSS module is enabled, GNSS position and
+              time information is sent to users through VRT context packets roughly every second.
+              In addition to the internal 30.72 MHz reference clock source and external 10 MHz source,
+              the GNSS module also provides a 30.72 MHz reference clock source option for
+              synchronized timestamps on VRT packets.
+              To facilitate easy integration into your new or existing applications, thinkRF supports two
+              industrial standard protocols:
+
+                  •   the Standard Commands for Programmable Instruments (SCPI) protocol for
+                      controlling and obtaining status from the R6000, and
+                  •    the VITA 49 Radio Transport (VRT) protocol for digitized data and its associated
+                       context information.
+              In addition to the protocols, thinkRF provides libTRF, a multi-platform C/C++ API library
+              that can be used for interfacing with thinkRF's RTSA devices (R5xx0 and R6000 series)
+              and will be maintained into the future to support interfacing with future thinkRF devices.
+              libTRF abstracts away the protocols, allowing for easy-to-use functions to interface and
+              perform data acquisition and spectral analysis with the device.
+              In addition, the API supports and will be evolved to increasingly provide sophisticated
+              signal processing capabilities that can be easily integrated into end-user application
+              code.
+              thinkRF’s S1000 Spectraware GUI (sometimes referred to as S1000) is a brand-new
+              spectrum analysis web application designed to work with the current R5xx0, R6000
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                           7
+Overview of the thinkRF R6000
+
+            devices, and future RTSAs. S1000 is a window to the RTSA hardware products. It
+            enables users to easily control, view and analyze signals such as 4G LTE, 5G NR, Wi-Fi,
+            among other RF signals. S1000 interfaces to an RTSA via libTRF.
+
+
+Getting Familiar with R6000
+            This section provides information about the front and rear panels, connection ports and
+            identification label of the R6000.
+
+
+            Note: The type and placement of connectors and components on the panels and the
+            case may vary depending upon the product variant and version.
+
+
+
+            Front Panel
+            The front panel of the R6000 contains the power switch with integrated LED power status
+            and five SMA connectors: RF IN (the input connector for the RF antenna port), GNSS
+            Antenna input, IF OUT, REF OUT, and REF IN.
+
+
+
+
+            Rear Panel
+            The rear panel of the R6000 contains Ethernet port, USB 3.1 port, various status LED
+            Indicators as marked, factory reset button, GPIO port and the 12 VDC power input port.
+            The power input connector is to be used only with the provided power adapter.
+
+
+
+
+8                                             ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                  Overview of the thinkRF R6000
+
+              Underside
+              The underside of the thinkRF R6000 includes a label that identifies the device. The
+              information on the label may vary depending on your product variant and version. The
+              product “Version” number is important for identifying which firmware can be used to
+              update your product.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                   9
+Installing the thinkRF R6000
+              Ensure that you read and understand the following information about safety and
+              electrostatic discharge before you unpack and install the R6000 device.
+
+              Warning: Only trained and qualified personnel should be allowed to install or replace this
+              equipment. Read the installation instructions before you connect the system to its power
+              source.
+
+
+
+Preventing Electrostatic Discharge Damage
+              Electrostatic Discharge (ESD) is a single-event, rapid transfer of electrostatic charge
+              between two objects, such as an operator and a piece of electrical equipment. ESD can
+              occur when a high electrostatic field develops between two objects. ESD occurs when
+              electronic components are improperly handled and is one of the major causes of device
+              failures in the semiconductor industry.
+              Electrostatic discharge is more likely to occur with the combination of synthetic fibers and
+              dry atmosphere. Always follow these steps to prevent ESD.
+
+              Warning: Never open the front or rear panels of the R6000 as personal injury may result
+              and opening the chassis will void the warranty. There are no user-serviceable parts
+              inside. Always contact thinkRF support for service through the online support form at
+              http://www.thinkrf.com/support/.
+
+
+
+
+              Caution: To prevent ESD, wear an ESD-preventive wrist strap that you provide, ensuring
+              that it makes good skin contact.
+
+
+
+
+              Caution: Do not touch any exposed contact pins or connector shells of interface ports
+              that do not have a cable attached. If cables are connected at one end only, do not touch
+              the exposed pins at the unconnected end of the cable.
+
+
+
+Unpacking the Box
+              This section lists the items that come with your R6000 analyzer. If any of the items are
+              missing or damaged, please contact your thinkRF customer service representative.
+              The R6000 shipping box contains the following:
+
+                  •   R6000 Real-Time Spectrum Analyzer
+                  •   Power adapter and cable
+                  •   Straight-through Ethernet cable
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                       10
+                                                                         Installing the thinkRF R6000
+
+                  •   Receiver antenna
+                  •   GNSS antenna and cable
+                  •   Precautions & Quickstart Guide
+
+
+              Note: The receiver antenna is included for your convenience and only intended to
+              perform adequately across a limited frequency range.
+
+
+
+Choosing the Mount Location for the R6000
+
+              Caution: To prevent damage to the R6000 radio receiver, do not install or operate the
+              R6000 within 2 feet (60 cm) of devices that transmit more than +15 dBm power, such as
+              Wi-Fi access points.
+
+              After you have selected a mount location, connect the R6000’s receiver, GNSS antenna,
+              Ethernet cable and power cable.
+
+
+Connecting the Antennas, Ethernet and Power Cables
+
+              Caution: Never connect a transmitter directly to the receiver with a cable.
+
+
+
+              Follow these steps to connect the receiver and GNSS antennas, the Ethernet cable, and
+              the power cable:
+
+                  1. Screw the antenna on to the R6000 "RF IN" antenna input SMA connector on the
+                     device’s front panel.
+                      Carefully turn the antenna screw by hand until you encounter resistance. See the
+                      System Specifications section for the maximum allowable input and cautions.
+
+
+              Caution: Do not overtighten the antenna connector on the jack. Using a wrench, pliers
+              or even your hand to overtighten the antenna can cause permanent damage to the
+              receiver. See the SMA Connectors section for the torque recommendations.
+
+
+                  2. Screw the GNSS antenna on to the R6000 "GNSS" antenna input SMA
+                     connector on the device’s front panel.
+                      Carefully turn the antenna screw by hand until you encounter resistance.
+                  3. Connect one end of the Ethernet cable to the R6000's Ethernet port (on the rear
+                     panel) and the other end to an Ethernet port on your router or PC.
+                  4. Connect the R6000 to its power adapter.
+
+
+              Warning: Use only the power adapter provided with the unit.
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                 11
+Installing the thinkRF R6000
+
+                  5. Plug the power adapter into a power outlet.
+                  6. Push the power button to power on the unit. A blue color ring indicates the unit is
+                     on.
+
+
+              Note: See the Using the R6000 Administration Console section for a description of the
+              R6000 status.
+
+
+
+
+12                                              ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                           Connecting to the R6000
+
+
+Connecting to the R6000
+              The R6000 analyzer is a network device. Typically, all communications and data capture
+              with the R6000 occur via a Gigabit Ethernet connection, either directly from a computer
+              or across an IP network.
+
+
+Determining Your Network Topology and IP Address Allocation
+              To connect with the R6000, you must decide the topology of your network connection and
+              how your R6000 obtains its IP address.
+
+
+              Network Topology
+              The R6000 analyzer supports any IP network topology via its Ethernet port, including:
+                  •   direct connection to a computer across an RJ-45 Ethernet cable (as described in
+                      the Connecting Directly to the R6000 section)
+                  •   connection across a routed local network, whether on the same subnet or across
+                      different subnets or a routed wide-area network (WAN) such as the Internet (as
+                      described in the Connecting to the R6000 across a Network section)
+
+
+
+
+              IP Address Allocation
+              The R6000 analyzer also supports different methods for obtaining its IP address,
+              including:
+                  •   Dynamic IP address allocation (DHCP)
+                      The IP address is assigned via the Dynamic Host Configuration Protocol (DHCP),
+                      for a routed network topology that has a DHCP server.
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                    13
+Connecting to the R6000
+
+                 •   Dynamic IP address allocation (APIPA)
+                     The IP address is assigned via the Automatic Private IP Addressing (APIPA)
+                     protocol (otherwise known as Auto-IP), where a DHCP server is not available.
+                     This method allows a direct connection to a computer that supports Auto-IP or to
+                     a local network using a switch. With Auto-IP, a host network device randomly
+                     assigns itself a link-local address in the 169.254.x.y subnet when it fails to
+                     contact a DHCP server. Many operating systems, including Windows, support
+                     Auto-IP.
+                 •   Static IP address allocation
+                     IP address is assigned locally. This method is applicable to any network topology.
+             By default, the R6000 is configured for DHCP. You can change the method of IP address
+             allocation from one supported method to another.
+             For instructions on configuring a static IP address (via its web Administration Console),
+             see the Configuring the R6000 IP Address section.
+             If your R6000 is configured with a static IP address, you can configure dynamic IP
+             address allocation using the Administration Console as well, or via a hardware reset.
+             A hardware reset is the simplest method for reconfiguring the R6000 to dynamic IP
+             allocation.
+
+
+Connecting Directly to the R6000
+             This section provides instructions on connecting the R6000 analyzer directly to a
+             computer via the Ethernet port.
+             The host PC might require a spare Ethernet interface that is not otherwise used as its
+             primary network connection. For example, you may use a wireless connection for primary
+             network connectivity or obtain a second Ethernet card or USB adapter to connect to the
+             R6000.
+
+
+             Note: The Ethernet interfaces on both the PC and the R6000 must be configured for the
+             same IP address allocation method before you can make a direct connection.
+
+
+             For the purposes of these instructions, thinkRF’s S1000 Spectraware Real-Time
+             Spectrum Analysis software is used to connect to the R6000.
+             To connect your computer directly to the R6000:
+                 1. Connect the Ethernet cable provided with the R6000 to the Ethernet port on the
+                    PC and the Ethernet port on the R6000.
+                 2. Power up the R6000 and wait a minute for it to complete booting.
+                 3. Check to ensure that the R6000 LINK indicator is illuminated. If it is not
+                    illuminated, your PC may not support automatic crossover on its Ethernet
+                    connection, and you may require an RJ-45 crossover Ethernet cable.
+                 4. If you are using static IP allocation, go to the next step. If you are using dynamic
+                    IP address allocation, check the STS LED for the Auto-IP setup completion (this
+                    takes approximately one minute or longer).
+
+
+
+14                                              ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                             Connecting to the R6000
+
+
+              Note: While the R6000 is searching for a DHCP server, the STS LED blinks yellow slowly
+              until it obtains an IP address either via DHCP or Auto-IP. The STS LED blinks in a green
+              heartbeat pattern if it has set up successfully to using an Auto-IP address.
+
+
+                  5. Verify the PC's IP configuration by opening a Command window and typing the
+                     ipconfig command (in Windows OS) to show the IP addresses assigned to
+                     each interface.
+                      The Ethernet interface should show a 169.254.x.y address as shown in the
+                      example below:
+
+
+
+
+                  6. Launch the S1000 software to determine the assigned IP address of the R6000.
+
+
+              In order for the S1000’s Discovery tool (which used libTRF’s discovery function) to locate
+              the R6000, your computer and the R6000 must be configured for the same subnet. If you
+              are using Auto-IP, then they will both be on the same 169.254.x.y subnet.
+              If you are using static IP and the s1000 cannot locate the R6000, you must have prior
+              knowledge of its static IP address or reset the device to use DHCP for IP allocation using
+              the reset switch on the rear panel.
+              Once you have the R6000 IP address, you can use it to communicate with the device.
+
+
+              Note: Link-local addresses used for Auto-IP are non-routable, so communication is
+              limited to devices within the local subnet. This restriction may be an issue when running
+              virtual machines (e.g. Mac Parallels, VirtualBox, etc.) that may be connected through
+              virtual routers to the host PC's physical network interface.
+
+
+
+
+              Note: After obtaining a link-local address, the R6000 continues to request a DHCP
+              address. If a DHCP server responds later, the link-local address is overwritten with the
+              offered IP address. This new address is retained until the network cable is physically
+              unplugged or the R6000 is restarted.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                       15
+Connecting to the R6000
+
+Connecting to the R6000 across a Network
+             You can connect to the R6000 analyzer from a computer across a local area network
+             (LAN), whether on the same subnet or different subnets, or across a wide area network
+             (WAN), such as WiFi.
+             Before you connect to the R6000, you must decide on your IP address allocation method.
+             The PC and R6000 do not need to use the same IP address allocation method, but if you
+             are using the S1000 software to locate the R6000, they must be on the same subnet.
+             If you are using DHCP, your router or network must support a DHCP server. You may
+             have to query your router's allocation tables to determine the IP allocated to your R6000
+             MAC address.
+             To connect to the R6000 across a network:
+                 1. Connect the Ethernet cable provided with the R6000 to the Ethernet port on the
+                    router and the Ethernet port on the R6000.
+                 2. Power up the R6000 and wait a minute for it to complete booting.
+                 3. Check to ensure that either your PC's or the R6000’s LINK indicator is
+                    illuminated.
+                 4. If your R6000 is behind a firewall or a router with firewall capability, then your
+                    network's DHCP server is likely assigning private IP addresses (e.g. 192.168.x.x,
+                    10.x.x.x, 172.x.x.x), and the firewall is likely providing some form of network
+                    address translation (NAT) function. If this is the case and you require access to
+                    the R6000 from outside your firewall, then you will likely have to configure the
+                    firewall to allow port forwarding on port 37000 and 37001. If necessary, consult
+                    your network administrator.
+                 5. Use the S1000 to determine the R6000's assigned IP address.
+             If you are using static IP and the S1000 cannot locate the R6000, you need to have prior
+             knowledge of its static IP address. If necessary, consult your network administrator.
+             Once you have the R6000 IP address, you can use it to communicate with the device.
+
+
+
+
+16                                             ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                           Using the R6000 Administration Console
+
+
+Using the R6000 Administration Console
+              This section provides instructions on connecting to the R6000 via its web-based
+              Administration Console. The Administration Console provides the ability to:
+
+                  •   obtain status information from the R6000
+                  •   change date and time configuration
+                  •   change IP configuration
+                  •   upgrade the R6000 firmware
+                   • restart the R6000
+              All these functions may be performed over the network locally or remotely.
+              You can connect to the R6000 Administration Console by entering the IP address of your
+              R6000 into a web browser. The IP address is shown in the S1000 software as the
+              connected device.
+
+
+Viewing Device Status
+              When you connect to the Administration Console, the main window shows Device Status
+              by default, and includes information such as the device serial number and firmware
+              version.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                17
+Using the R6000 Administration Console
+
+Configuring R6000 Time Synchronization
+             You can set the R6000 analyzer time manually, configure the R6000 to synchronize with
+             the PC’s time, or configure time synchronization with an NTP server.
+
+
+             Note: The R6000 stores its time based on the Coordinated Universal Time (UTC) and
+             otherwise has no notion of local time-zones. Conversely, the web dialog translates and
+             displays the R6000 time based on the local time-zone setting of the PC.
+
+
+             To configure the R6000 time synchronization method:
+                 1. Click on the Time Configuration link in the left pane of the Administration
+                    Console.
+                 2. In the R6000 Device Time Configuration window (main pane), select “NTP” as
+                    the time sync source.
+                 3. Enter the IP addresses for up to 3 NTP servers (you can find the NTP server list
+                    at https://www.ntppool.org/en/
+                 4. Select “Continuous” as the Time sync mode.
+             The R6000’s time is synchronized to the NTP server on a regular basis (the interval is
+             optimally determined automatically).
+
+
+
+
+18                                             ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                           Using the R6000 Administration Console
+
+
+              Note: It is important that NTP be set up in order to get a precise time and synchronize
+              VRT timestamps with global time.
+
+
+                  5. Click Apply to save your changes.
+
+
+Configuring the R6000 IP Address
+              You can configure the R6000 to obtain an IP address dynamically (using DHCP) or you
+              can set the IP address manually (using a static address).
+
+              Caution: If the R6000 IP address is set to a static IP, the only way to communicate with
+              the R6000 is via that IP address. If you mistakenly enter the wrong IP address and/or
+              subnet mask, or forget the IP address, you can change the IP configuration by Resetting
+              the R6000 to Factory Settings.
+
+              To configure the R6000 IP address:
+                  1. Click on the IP Configuration link in the left pane of the Administration Console.
+                  2. In the R6000 Device IP Configuration window (main pane), select the method
+                     for IP address allocation.
+
+
+
+
+                  3. If you select the static IP address option, enter the IP address information as
+                     appropriate.
+                  4. Click Apply to save your changes.
+              The configuration changes take effect immediately, and your current connection (based
+              on the previous IP address) will no longer be valid.
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                      19
+Using the R6000 Administration Console
+
+Updating the R6000 Firmware
+             This section describes how to update the R6000 firmware.
+             The firmware installation file contains firmware images associated with the R6000’s
+             embedded operating system and applications. The update process copies the new
+             images to the R6000 but does not remove the currently installed images. The new
+             firmware installation will only take effect after the R6000 is restarted.
+             You can obtain the latest R6000 firmware file from the thinkRF website at
+             https://www.thinkrf.com/firmware-updates/.
+             To update the R6000 firmware:
+                 1. Click on the Firmware Install link in the left pane of the Administration Console.
+                 2. In the R6000 Device Firmware Install window (main pane), enter or browse to
+                    the location of the thinkRF_R6000_firmware_vX.Y.Z.img (or similar *.img)
+                    firmware image file.
+                 3. Click Install to install the firmware.
+
+
+             Warning: Do not unplug the R6000 during a firmware update or the device may become
+             inoperable.
+
+
+                 4. When the firmware image for the intended product version is installed, the
+                    Installing page appears, showing the progression of the firmware being
+                    uploaded and installed.
+
+
+
+
+20                                               ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                             Using the R6000 Administration Console
+
+                  5. When firmware installation is complete, a web dialog appears requesting
+                     confirmation that you want to restart the R6000 for the changes to take effect.
+                     You can click OK to proceed or Cancel to defer the device restart.
+
+
+              Note: If the R6000 is not restarted immediately after a firmware installation process, the
+              newly installed firmware will take effect upon the next restart of the R6000 regardless of
+              whether it is a software restart or a power-on reset.
+
+              In addition, the boot-up might take over a minute when Auto-IP connection method is
+              used.
+
+
+              You can also restart the R6000 via the Administration Console. Performing a device reset
+              from the Administration Console is equivalent to a power-on reset.
+              To restart the R6000:
+                  1. Click on the Restart link in the left pane of the Administration Console.
+                  2. In the R6000 Device Restart window (main pane), click Restart.
+
+
+
+
+              Depending on your network settings, the R6000 may obtain a different IP address after it
+              restarts, which will result in the links to the Administration Console being interrupted. This
+              will only happen when the unit is not in static IP address mode, or a factory reset has
+              been initiated.
+              Please check with your network administrator to determine the IP address of the R6000.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                       21
+Using the GNSS Module
+              The R6000’s Global Navigation Satellite System (GNSS) supports location coordination
+              activities with several different satellite constellations, including GPS/QZSS, GLONASS,
+              and BeiDou. The R6000 GNSS module supports up to 2 concurrent receptions.
+              Location position and time are transmitted through VRT packets, along with timestamping
+              and data output for captures.
+              The R6000 GNSS module supports GPS and GLONASS. Please refer to the R6000
+              datasheet for detailed specifications.
+
+
+Configuring the R6000 GNSS Module
+              The GNSS module can be configured via direct SCPI control (see R6000 Programmer’s
+              Guide), the libTRF API. Its configuration can also be viewed and adjusted from the
+              Device -> Device Location menu in the S1000 software.
+
+
+Selecting the GNSS 30.72 MHz Reference Source
+              In addition to the internal 30.72 MHz and external 10 MHz reference clock sources
+              available with the R6000, the GNSS module also provides a 30.72 MHz reference clock
+              source option for synchronized timestamps on VRT packets.
+              You can configure the R6000 to use the GNSS reference clock using the same methods
+              as mentioned above. For more information on the GNSS reference source, please refer
+              to the R6000 Programmer’s Guide.
+
+
+Getting Real-Time Geolocation Data
+              GNSS timestamped information is recorded in the GNSS VRT packets, which are
+              returned approximately every 1 second. Refer to “Formatted GNSS Geolocation Fields”
+              in the VRT section of the R6000 Programmer’s Guide for more information. libTRF API
+              provides this information in its data structure as well.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                   22
+Resetting the R6000 to Factory Settings
+       If for any reason you cannot connect to the R6000 via the Ethernet port, you can restore
+       device factory settings to reset IP configuration and obtain an IP address dynamically
+       using DHCP.
+       Performing a factory resent also sets the reference level calibration back to factory
+       default values.
+       Follow these steps to reset your R6000:
+           1. If not already powered on, power on the R6000.
+           2. When the R6000 is powered on, press and release the Reset button on the rear
+              panel of the device. You can insert a pin or paperclip to push the Reset button.
+               The device will immediately reboot, loading the default factory settings.
+           3. Wait for the device to finish booting up (approximately 20 seconds), then use
+              libTRF’s Discovery tool or S1000 to determine the unit’s IP.
+
+
+
+
+23                                     ThinkRF R6000 Real Time Signal Analyzer User Guide
+Status Indicator LEDs
+          The rear panel of the R6000 analyzer includes status indicator LEDs as shown in the
+          following figure and described in the following sections.
+
+
+
+
+Status Indicator LED
+
+           Pattern                    Meaning
+           Fast blink red             Hardware failure
+           Slow blink red             Firmware failure
+           Slow blink amber           Waiting for DHCP
+           Slow blink green           Busy
+           Heartbeat green            AutoIP
+           Solid green                Ready
+
+
+Status RF Lock LED
+
+           Pattern                    Meaning
+           Solid red                  Unlocked
+           Solid green                Locked
+
+
+REF Stat LED
+
+           Pattern                    Meaning
+           Solid red                  Internal reference, unlocked
+           Slow blink red             External reference, unlocked
+           Slow blink amber           GNSS reference, no fix
+           Slow blink green           GNSS or external reference, locked
+           Solid green                Internal reference, locked
+
+
+24                                       ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                                 Hardware Reference
+
+
+Hardware Reference
+              This section provides physical and performance specifications, and port and cable
+              pinouts for the R6000.
+
+
+System Specifications
+              The following table outlines the physical and electrical specifications for the R6000.
+
+               Description                 Design Specification
+               Dimensions                  150 x 110 x 60 mm
+               HxWxD                       (5.9” x 4.3” x 2.4”)
+               (D with rubber feet)
+               Weight (approximately)      1.2 kg (2.6 lbs)
+
+               Digital interface ports     RJ45 Ethernet 10/100/1000,
+                                           15-pin female D-Subminiature
+               Analog interface ports      RF IN, 10 MHz REF IN and OUT, GPS, IF Output
+               Input supply voltage        12 VDC +/- 5%
+               Input supply current        2.3 A maximum
+               Operating temperature       32 to 122°F (0 to 50°C)
+
+
+SMA Connectors
+              The SMA connectors on the front and rear panels are all female jacks with 50Ω nominal
+              impedance.
+
+
+              Note: The recommended torque setting for all SMA connectors is 45 N.cm (4lbs.in). An
+              example of a torque wrench that can be used for this is Huber-Suhner P/N 74 Z-0-0-79.
+
+
+
+
+              Caution: Injecting signal levels that exceed the specifications described in the following
+              table will result in permanent damage to the receiver.
+
+              The following table outlines the maximum and minimum power level restrictions on the
+              SMA connectors.
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                     25
+Hardware Reference
+
+             Connector Name          Direction          Max Power Level          Min Power Level
+             RF IN1                  in                 +20 dBm, 10 V DC         N/A
+             10 MHz IN2              in                 + 10 dBm                 -10 dBm
+             10 MHz OUT              out                N/A                      N/A
+             GNSS                    in                 N/A                      N/A
+             IF Out                  Out
+            1 It is recommended that the output of a signal source be verified with the use of a power
+
+            meter prior to connecting the source directly to the RF IN connector. Never exceed the
+            damage level of +20 dBm. Additionally, any external signal sources connected to RF IN
+            must be turned on only after powering on the R6000 and turned off prior to powering
+            down the R6000.
+            2 The 10 MHz reference input must be powered down prior to powering down the R6000.
+
+
+
+
+Ethernet RJ-45 Port Pinout
+            The following figure shows the R6000 Ethernet RJ-45 pinout:
+
+
+
+
+                      Pin                 Signal
+                      1                   BI_DA+
+                      2                   BI_DA-
+                      3                   BI_DB+
+                      4                   BI_DC+
+                      5                   BI_DC-
+                      6                   BI_DB-
+                      7                   BI_DD+
+                      8                   BI_DD-
+
+
+GPIO Port Pinout
+            The GPIO (General Purpose Input/Output) port will be instrumented in future releases. As
+            new GPIO capabilities are released this section will be updated.
+
+
+
+
+26                                                 ThinkRF R6000 Real Time Signal Analyzer User Guide
+                                                                               Hardware Reference
+
+RJ-45 Straight-Through Ethernet Cable
+
+
+
+
+RJ-45 Crossover Ethernet Cable
+
+
+
+
+Operational Considerations and Maintenance
+              The R6000 should be operated only within its specified operation temperature and
+              specification of 0°C to 50°C. The ideal operating temperature for optimum performance is
+              between 20°C to 25°C.
+
+
+              Caution: Do not expose the device to direct sunlight or radiation from other sources of
+              heat.
+
+              Some regular maintenance is needed to maintain the unit in its good working state. This
+              includes:
+                  •   cleaning the box with a slightly damp cloth from time to time to remove any dust
+                      or debris that may accumulate in the device through any openings
+                  •   keeping all connectors clean (especially the threads) with a soft cloth
+                  •   cleaning the device with a fan (for example, an air can) to remove dust
+
+
+
+
+ThinkRF R6000 Real-Time Signal Analyzer User Guide                                                      27
+

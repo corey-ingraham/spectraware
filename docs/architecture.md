@@ -21,6 +21,12 @@ spectraware/
 TBD (RM-001). Constraints already fixed by `CLAUDE.md` Critical Rules: idempotent, `set -euo pipefail`,
 pinned + checksummed downloads, a verify step that proves the result on the host.
 
+## Vendor reference
+
+Device setup, networking and specs: [User Guide](manuals/R6000-user-guide-75-0054.txt).
+SCPI control and VRT data streaming: [Programmer's Guide](manuals/R6000-programmers-guide-75-0055.txt).
+Index: [manuals/README.md](manuals/README.md).
+
 ## Trust model
 
 - Root is needed for package installs; scripts are run by the operator with `sudo`, not by Claude.

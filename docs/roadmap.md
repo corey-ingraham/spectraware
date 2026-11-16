@@ -9,6 +9,7 @@ RM-001: answer the design questions, then plan the installer (plan mode, registe
 ### RM-001 — bootstrap installer for SpectraWare on Ubuntu · planned (2026-11-16)
 
 **Goal:** fresh Ubuntu box → working SpectraWare with one clone + one command; idempotent.
+**Audience:** anyone who clones the public repo, not just Corey's machines. No local paths or private assumptions.
 
 **Prerequisites:** none.
 
