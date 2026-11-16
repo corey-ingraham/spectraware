@@ -32,7 +32,7 @@ working, verified SpectraWare install for an R6000 on USB. Re-running is safe.
 | 1 | `install.sh`, `uninstall.sh`, `versions.tsv`, `lib/common.sh`, ModemManager rule, `--check` | `--check` on a desktop with an R6000 on USB 3: package, udev, sandbox, device r/w at 5 Gb/s | ✅ |
 | 2 | `--ethernet`: ufw rule for discovery replies | discovery finds an R6000 over Ethernet with ufw enabled | ⬜ needs Ethernet setup |
 | 3 | `tests/smoke.sh` | install → re-run says "Nothing to change" → uninstall, on 22.04 / 24.04 / 26.04; download path on 26.04 | ✅ |
-| 4 | CI: shellcheck on push | green run on GitHub | ⬜ |
+| 4 | CI: `.github/workflows/lint.yml` | green run on GitHub (`d6e03c0`) | ✅ |
 
 ## Open
 

@@ -31,7 +31,7 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 | Ubuntu | 22.04 → jammy build · 24.04 → noble · 26.04 → noble (all smoke-tested) |
 | Remote | <https://github.com/corey-ingraham/spectraware> (public) |
 | Language | bash (`set -euo pipefail`); no other runtime |
-| Status | RM-001 Phases 1 + 3 done; Ethernet path and CI open |
+| Status | RM-001 Phases 1, 3, 4 done; Ethernet path (Phase 2) open |
 
 ## Critical Rules
 
