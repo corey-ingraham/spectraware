@@ -14,6 +14,7 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 | [docs/issues.md](docs/issues.md) | problem log (`ISSUE-NNN`) |
 | [docs/roadmap.md](docs/roadmap.md) | planned work (`RM-NNN`) — **resume here** |
 | [docs/plans/README.md](docs/plans/README.md) | plan register (design artifacts) |
+| [docs/wifi.md](docs/wifi.md) | Wi-Fi monitoring: 2.4/5/6 GHz profiles, display settings, channel tables |
 | [docs/manuals/README.md](docs/manuals/README.md) | thinkRF User Guide, Programmer's Guide, Datasheet, streaming app note (PDF + text) |
 
 **Vendor manuals:** grep the `.txt` first, open the PDF for tables/figures —

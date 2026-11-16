@@ -2,6 +2,11 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — Wi-Fi monitoring guide
+
+- [wifi.md](wifi.md): Save/Load Settings profiles for 2.4, 5, 6 GHz and all bands, display settings,
+  channel tables. Linked from README and CLAUDE.md.
+
 ## 2026-11-16 — `--check` warns when the R6000 is behind a USB hub [ISSUE-005]
 
 - [lib/common.sh](../lib/common.sh): hub detected from the sysfs device name (`2-1.1` vs `2-3`).

@@ -48,6 +48,10 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
 ./uninstall.sh               remove everything install.sh added
 ```
 
+## Using it
+
+Watching Wi-Fi (2.4, 5, 6 GHz) and saving each setup as a profile: [docs/wifi.md](docs/wifi.md).
+
 ## Troubleshooting
 
 - **Taskbar / desktop icon does nothing:** a pinned launcher can point at a copy of `spectraware.desktop`
