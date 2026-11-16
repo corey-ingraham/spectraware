@@ -37,4 +37,4 @@ working, verified SpectraWare install for an R6000 on USB. Re-running is safe.
 ## Open
 
 - The ufw rule assumes the R6000 replies from source port 18331 — unverified until Phase 2.
-- The ModemManager rule is installed and lint-clean but not yet confirmed effective with a replug on a real host.
+- ✅ ModemManager rule confirmed 2026-11-16: `ID_MM_DEVICE_IGNORE=1` on the R6000 and its `ttyACM0`; ModemManager no longer touches the port.

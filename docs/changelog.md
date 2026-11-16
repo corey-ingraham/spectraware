@@ -2,6 +2,12 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — fresh-install test passed on a real desktop [RM-001]
+
+- Clean 26.04 desktop, fresh clone of the public repo, no local `.deb`: `./install.sh` downloaded from thinkRF,
+  verified sha256, installed, added the ModemManager rule; `--check` all green with the R6000 on USB 3 (5000 Mb/s).
+- ModemManager rule confirmed effective: `ID_MM_DEVICE_IGNORE=1` on the device and `ttyACM0`, no ModemManager probe.
+
 ## 2026-11-16 — installer: install.sh, uninstall.sh, smoke test [RM-001]
 
 - [install.sh](../install.sh) / [uninstall.sh](../uninstall.sh) / [lib/common.sh](../lib/common.sh): find or download
