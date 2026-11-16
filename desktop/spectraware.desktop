@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Spectraware
+Comment=thinkRF Spectraware
+Exec=/usr/bin/Spectraware
+Icon=thinkrf_logo
+Terminal=false
+StartupNotify=true
+StartupWMClass=S1000_Client
+Categories=Science;Utility;Engineering;

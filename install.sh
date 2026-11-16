@@ -111,7 +111,26 @@ if [ "$MM" = 1 ] && mm_present; then
     fi
 fi
 
-# --- 3. Firewall, Ethernet only --------------------------------------------------
+# --- 3. Taskbar icon ------------------------------------------------------------
+# The client window has no icon of its own (blank box in the taskbar) and a WM_CLASS that
+# thinkRF's menu entry doesn't match. A login helper sets the logo on its windows; a
+# corrected menu entry in /usr/local/share overrides the packaged one.
+icon_changed=0
+for entry in "${DESKTOP_FILES[@]}"; do
+    IFS='|' read -r src dst mode <<<"$entry"
+    if ! cmp -s "$src" "$dst"; then
+        add_root_step "Taskbar icon fix: install $(basename "$dst")" install -D -m "$mode" "$src" "$dst"
+        icon_changed=1
+    fi
+done
+if [ "$icon_changed" = 0 ]; then
+    ok "taskbar icon fix already in place"
+elif [ "$(id -u)" -ne 0 ] && [ -n "${DISPLAY:-}" ]; then
+    # Otherwise it starts at the next login. A copy already running keeps the old code until then.
+    add_step "Start the window icon helper now (it starts by itself at each login)" setsid -f "$ICON_HELPER"
+fi
+
+# --- 4. Firewall, Ethernet only --------------------------------------------------
 if [ "$ETHERNET" = 1 ]; then
     if command -v ufw >/dev/null 2>&1 && ufw_enabled; then
         # ufw skips a rule that already exists, so this is safe to repeat.

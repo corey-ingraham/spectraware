@@ -67,7 +67,9 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 - Noble `.deb` installs on 26.04: apt resolves `libqt5*`/`libasound2` via `t64` Provides.
 - Server takes one client per port then stops listening; ~100% CPU is normal.
 - Probe localhost on both 127.0.0.1 and ::1 — binding varies by machine.
-- Dead taskbar launcher = pin to a deleted `.desktop` copy; pin the `/usr/share` one.
+- Dead taskbar launcher = pin to a deleted `.desktop` copy; re-pin from the menu.
+- Client window: no icon of its own, `WM_CLASS` `S1000_Client`; helper sets icon.
+- `xprop -set` truncates lists at 64 values; set big properties via libX11 ctypes.
 - Containers see host `/sys` USB devices but not `/dev/bus/usb` nodes.
 - `.deb` exceeds GitHub's 100 MB file limit — never commit it.
 

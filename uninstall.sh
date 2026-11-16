@@ -21,6 +21,14 @@ if [ -f "$MM_RULE_DST" ]; then
     add_root_step "Remove the ModemManager rule" rm -f "$MM_RULE_DST"
     add_root_step "Reload udev rules" udevadm control --reload-rules
 fi
+for entry in "${DESKTOP_FILES[@]}"; do
+    IFS='|' read -r _ dst _ <<<"$entry"
+    if [ -e "$dst" ]; then add_root_step "Remove $dst (taskbar icon fix)" rm -f "$dst"; fi
+done
+[ -d "$(dirname "$ICON_HELPER")" ] && add_root_step "Remove $(dirname "$ICON_HELPER") if empty" rmdir --ignore-fail-on-non-empty "$(dirname "$ICON_HELPER")"
+if pgrep -u "$(id -u)" -x "$ICON_HELPER_PROC" >/dev/null 2>&1; then
+    add_raw_step "Stop the running window icon helper" "pkill -u $(id -u) -x $ICON_HELPER_PROC || true"
+fi
 if command -v ufw >/dev/null 2>&1 && ufw_enabled; then
     # Harmless if the rule was never added (ufw reports a non-existent rule and exits 0).
     add_root_step "Remove the R6000 discovery firewall rule, if present" ufw delete allow "${UFW_RULE[@]}"

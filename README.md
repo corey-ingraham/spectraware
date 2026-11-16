@@ -31,6 +31,7 @@ Then plug the R6000 into a **USB 3** port, power it on, and start **Spectraware*
 |---|---|---|
 | `apt-get install` the SpectraWare `.deb` | the app, its libraries, and thinkRF's USB permission rule `/etc/udev/rules.d/99-thinkrf.rules` | n/a (that's the point) |
 | `/etc/udev/rules.d/70-thinkrf-modemmanager.rules` (only if ModemManager is installed) | stops ModemManager probing the R6000's USB serial port as if it were a modem | `--no-modemmanager` |
+| taskbar icon fix: a small login helper + corrected menu entry (`/usr/local/...`, `/etc/xdg/autostart/`) | SpectraWare's window sets no icon, so taskbars show a blank box instead of the thinkRF logo | n/a |
 | ufw rule allowing UDP from port 18331 (only with `--ethernet`, if ufw is on) | lets device-discovery replies through the firewall | leave out `--ethernet` |
 
 Prefer to run it yourself? `./install.sh --print-commands` prints the commands and changes nothing.
@@ -51,7 +52,9 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
 
 - **Taskbar / desktop icon does nothing:** a pinned launcher can point at a copy of `spectraware.desktop`
   that has since been deleted (e.g. the Desktop icon). Remove the pin and re-pin **Spectraware** from the
-  application menu, which uses `/usr/share/applications/spectraware.desktop` and survives reinstalls.
+  application menu, which survives reinstalls.
+- **Blank white box instead of the logo on the open window:** the icon helper starts at login; log out and
+  back in after installing (or run `/usr/local/lib/spectraware/spectraware-window-icon &`).
 - **High CPU from `spectraware-server`:** normal while SpectraWare is open.
 - **`--check` says the server is "neither listening nor connected":** quit SpectraWare and start it again.
 - **R6000 not found:** `lsusb -d 3830:5301` should list it. Use a USB 3 port directly on the computer and

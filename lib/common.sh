@@ -12,6 +12,16 @@ MM_RULE_DST=/etc/udev/rules.d/70-thinkrf-modemmanager.rules
 SANDBOX=/usr/lib/spectraware/chrome-sandbox
 UFW_RULE=(proto udp from any port 18331 to any)       # R6000 broadcast-discovery replies
 
+# Taskbar icon fix: the client sets no window icon and reports WM_CLASS S1000_Client, which
+# thinkRF's .desktop doesn't name. Repo file -> installed path, mode. See docs/architecture.md.
+ICON_HELPER=/usr/local/lib/spectraware/spectraware-window-icon
+ICON_HELPER_PROC=spectraware-win                      # its process name (comm, 15 chars)
+DESKTOP_FILES=(
+    "$HERE/desktop/spectraware-window-icon|$ICON_HELPER|0755"
+    "$HERE/desktop/spectraware-window-icon.desktop|/etc/xdg/autostart/spectraware-window-icon.desktop|0644"
+    "$HERE/desktop/spectraware.desktop|/usr/local/share/applications/spectraware.desktop|0644"
+)
+
 if [ -t 1 ]; then C_OK=$'\033[32m'; C_WARN=$'\033[33m'; C_FAIL=$'\033[31m'; C_B=$'\033[1m'; C_0=$'\033[0m'
 else C_OK=""; C_WARN=""; C_FAIL=""; C_B=""; C_0=""; fi
 say()  { printf '%s\n' "$*"; }
@@ -94,6 +104,14 @@ run_check() {
         if cmp -s "$MM_RULE_SRC" "$MM_RULE_DST"; then ok "ModemManager ignores the R6000 ($MM_RULE_DST)"
         else warn "ModemManager may probe the R6000's serial port - run ./install.sh to add the rule"; fi
     fi
+
+    local entry src dst missing=0
+    for entry in "${DESKTOP_FILES[@]}"; do
+        IFS='|' read -r src dst _ <<<"$entry"
+        cmp -s "$src" "$dst" || missing=1
+    done
+    if [ "$missing" = 0 ]; then ok "taskbar icon fix installed (window icon helper + menu entry)"
+    else warn "taskbar icon fix missing or outdated - run ./install.sh to add it"; fi
 
     if ufw_enabled; then
         say "  info  ufw firewall is enabled - USB needs nothing; for Ethernet discovery see ./install.sh --ethernet"

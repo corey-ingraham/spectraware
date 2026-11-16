@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SpectraWare window icon
+Comment=Shows the thinkRF logo on SpectraWare's taskbar entry (the app sets no icon itself)
+Exec=/usr/local/lib/spectraware/spectraware-window-icon
+NoDisplay=true
+Terminal=false
+X-GNOME-Autostart-enabled=true

@@ -2,6 +2,13 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — taskbar shows the thinkRF logo on the open window [ISSUE-004]
+
+- [desktop/](../desktop/): `spectraware-window-icon` login helper (python3 stdlib + libX11, event-driven) sets
+  the logo on SpectraWare windows; autostart entry; menu entry with `StartupWMClass=S1000_Client`.
+- [install.sh](../install.sh) installs them (always, listed like every step); `--check` reports them;
+  [uninstall.sh](../uninstall.sh) removes them and stops the helper.
+
 ## 2026-11-16 — `--check` no longer fails a running SpectraWare [ISSUE-003]
 
 - [lib/common.sh](../lib/common.sh): server ports count as served when listening on IPv4/IPv6 or already connected.

@@ -1,0 +1,205 @@
+#!/usr/bin/python3 -I
+"""spectraware-window-icon - give SpectraWare's window the thinkRF logo.
+
+The SpectraWare client (Electron) never sets a window icon, so taskbars that use the
+window's own icon (LXQt, XFCE, ...) show a generic blank-window picture. Started at login
+from /etc/xdg/autostart, this waits for X11 window-list changes (no polling, idle in
+between) and sets _NET_WM_ICON on each SpectraWare window to the logo from thinkRF's
+package. Exits quietly when there is no X display, the logo is missing, or another copy
+is already running. Uses only the Python standard library and libX11.
+"""
+import ctypes as C
+import ctypes.util
+import fcntl
+import os
+import struct
+import sys
+import zlib
+
+WM_CLASSES = {b"S1000_Client", b"spectraware-client", b"Spectraware"}
+ICON_PATHS = ["/usr/share/icons/hicolor/48x48/apps/thinkrf_logo.png",
+              "/usr/share/pixmaps/thinkrf_logo.png"]
+SIZE = 64
+
+
+def load_png_rgba(path):
+    """Decode an 8-bit RGBA/RGB non-interlaced PNG -> (w, h, bytes RGBA)."""
+    data = open(path, "rb").read()
+    if data[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError("not a PNG")
+    pos, idat, ihdr = 8, [], None
+    while pos < len(data):
+        n, typ = struct.unpack(">I4s", data[pos:pos + 8])
+        body = data[pos + 8:pos + 8 + n]
+        if typ == b"IHDR":
+            ihdr = struct.unpack(">IIBBBBB", body)
+        elif typ == b"IDAT":
+            idat.append(body)
+        elif typ == b"IEND":
+            break
+        pos += 12 + n
+    w, h, depth, ctype, _, _, interlace = ihdr
+    if depth != 8 or ctype not in (2, 6) or interlace:
+        raise ValueError("unsupported PNG format")
+    bpp = 4 if ctype == 6 else 3
+    raw = zlib.decompress(b"".join(idat))
+    stride = w * bpp
+    out = bytearray(h * stride)
+    prev = bytearray(stride)
+    for y in range(h):
+        f = raw[y * (stride + 1)]
+        line = bytearray(raw[y * (stride + 1) + 1:(y + 1) * (stride + 1)])
+        if f == 1:
+            for i in range(bpp, stride):
+                line[i] = (line[i] + line[i - bpp]) & 255
+        elif f == 2:
+            line = bytearray(bytes(map(lambda a, b: (a + b) & 255, line, prev)))
+        elif f == 3:
+            for i in range(stride):
+                left = line[i - bpp] if i >= bpp else 0
+                line[i] = (line[i] + ((left + prev[i]) >> 1)) & 255
+        elif f == 4:
+            for i in range(stride):
+                a = line[i - bpp] if i >= bpp else 0
+                b = prev[i]
+                c = prev[i - bpp] if i >= bpp else 0
+                p = a + b - c
+                pa, pb, pc = abs(p - a), abs(p - b), abs(p - c)
+                line[i] = (line[i] + (a if pa <= pb and pa <= pc else b if pb <= pc else c)) & 255
+        out[y * stride:(y + 1) * stride] = line
+        prev = line
+    if bpp == 3:
+        rgba = bytearray(w * h * 4)
+        rgba[0::4], rgba[1::4], rgba[2::4] = out[0::3], out[1::3], out[2::3]
+        rgba[3::4] = b"\xff" * (w * h)
+        out = rgba
+    return w, h, bytes(out)
+
+
+def load_rgba(path, size):
+    """Logo scaled to size x size, as RGBA bytes. GdkPixbuf when present (fast), else pure Python."""
+    try:
+        import gi
+        gi.require_version("GdkPixbuf", "2.0")
+        from gi.repository import GdkPixbuf
+        pb = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, size, size, False)
+        if not pb.get_has_alpha():
+            pb = pb.add_alpha(False, 0, 0, 0)
+        px, rs = pb.get_pixels(), pb.get_rowstride()
+        return b"".join(px[y * rs:y * rs + size * 4] for y in range(size))
+    except Exception:
+        pass
+    w, h, src = load_png_rgba(path)
+    out = bytearray(size * size * 4)
+    for y in range(size):
+        y0, y1 = y * h // size, max(y * h // size + 1, (y + 1) * h // size)
+        for x in range(size):
+            x0, x1 = x * w // size, max(x * w // size + 1, (x + 1) * w // size)
+            r = g = b = a = 0
+            for yy in range(y0, y1):          # box filter, alpha-weighted
+                row = yy * w * 4
+                for xx in range(x0, x1):
+                    i = row + xx * 4
+                    pa = src[i + 3]
+                    r += src[i] * pa; g += src[i + 1] * pa; b += src[i + 2] * pa; a += pa
+            n = (y1 - y0) * (x1 - x0)
+            o = (y * size + x) * 4
+            if a:
+                out[o:o + 4] = bytes((r // a, g // a, b // a, a // n))
+    return bytes(out)
+
+
+class XEvent(C.Structure):
+    _fields_ = [("type", C.c_int), ("serial", C.c_ulong), ("send_event", C.c_int),
+                ("display", C.c_void_p), ("window", C.c_ulong), ("atom", C.c_ulong),
+                ("pad", C.c_byte * 192)]
+
+
+def main():
+    if not os.environ.get("DISPLAY"):
+        return 0
+    lockdir = os.environ.get("XDG_RUNTIME_DIR") or "/tmp"
+    lock = open(os.path.join(lockdir, "spectraware-window-icon.%d.lock" % os.getuid()), "w")
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        return 0                                  # already running in this session
+    src = next((p for p in ICON_PATHS if os.path.isfile(p)), None)
+    if not src:
+        return 0                                  # SpectraWare not installed
+
+    x = C.cdll.LoadLibrary(ctypes.util.find_library("X11") or "libX11.so.6")
+    x.XOpenDisplay.restype = C.c_void_p
+    x.XOpenDisplay.argtypes = [C.c_char_p]
+    x.XDefaultRootWindow.restype = C.c_ulong
+    x.XDefaultRootWindow.argtypes = [C.c_void_p]
+    x.XInternAtom.restype = C.c_ulong
+    x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
+    x.XSelectInput.argtypes = [C.c_void_p, C.c_ulong, C.c_long]
+    x.XNextEvent.argtypes = [C.c_void_p, C.POINTER(XEvent)]
+    x.XGetWindowProperty.argtypes = [C.c_void_p, C.c_ulong, C.c_ulong, C.c_long, C.c_long, C.c_int,
+                                     C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_int),
+                                     C.POINTER(C.c_ulong), C.POINTER(C.c_ulong),
+                                     C.POINTER(C.c_void_p)]
+    x.XChangeProperty.argtypes = [C.c_void_p, C.c_ulong, C.c_ulong, C.c_ulong, C.c_int, C.c_int,
+                                  C.c_void_p, C.c_int]
+    x.XFree.argtypes = [C.c_void_p]
+    x.XFlush.argtypes = [C.c_void_p]
+    # The default Xlib error handler exits the process; a window can vanish between
+    # listing and setting its icon, so ignore errors (BadWindow) instead.
+    handler_t = C.CFUNCTYPE(C.c_int, C.c_void_p, C.c_void_p)
+    ignore = handler_t(lambda d, e: 0)
+    x.XSetErrorHandler.argtypes = [handler_t]
+    x.XSetErrorHandler(ignore)
+
+    d = x.XOpenDisplay(None)
+    if not d:
+        return 0
+    root = x.XDefaultRootWindow(d)
+    a_list = x.XInternAtom(d, b"_NET_CLIENT_LIST", 0)
+    a_class = x.XInternAtom(d, b"WM_CLASS", 0)
+    a_icon = x.XInternAtom(d, b"_NET_WM_ICON", 0)
+    a_card = x.XInternAtom(d, b"CARDINAL", 0)
+
+    def prop(win, atom):
+        t, f, n, after, p = C.c_ulong(), C.c_int(), C.c_ulong(), C.c_ulong(), C.c_void_p()
+        if x.XGetWindowProperty(d, win, atom, 0, 1 << 20, 0, 0, C.byref(t), C.byref(f),
+                                C.byref(n), C.byref(after), C.byref(p)) != 0 or not p.value:
+            return f.value, b"", 0
+        width = {8: 1, 16: C.sizeof(C.c_short), 32: C.sizeof(C.c_long)}.get(f.value, 1)
+        raw = C.string_at(p.value, n.value * width)
+        x.XFree(p)
+        return f.value, raw, n.value
+
+    icon = None
+    done = set()
+    PropertyNotify, PropertyChangeMask = 28, 1 << 22
+    x.XSelectInput(d, root, PropertyChangeMask)
+    ev = XEvent()
+    scan = True
+    while True:
+        if scan:
+            fmt, raw, n = prop(root, a_list)
+            wins = set(C.cast(C.c_char_p(raw), C.POINTER(C.c_ulong))[i] for i in range(n)) if fmt == 32 else set()
+            done &= wins                          # forget closed windows
+            for w in wins - done:
+                parts = prop(w, a_class)[1].split(b"\0")
+                if not WM_CLASSES.intersection(parts):
+                    continue
+                if icon is None:
+                    rgba = load_rgba(src, SIZE)
+                    vals = [SIZE, SIZE] + [(rgba[i + 3] << 24) | (rgba[i] << 16) | (rgba[i + 1] << 8) | rgba[i + 2]
+                                           for i in range(0, len(rgba), 4)]
+                    icon = (C.c_ulong * len(vals))(*vals)   # format-32 data is C long in Xlib
+                x.XChangeProperty(d, w, a_icon, a_card, 32, 0, icon, len(icon))
+                x.XFlush(d)
+                done.add(w)
+        x.XNextEvent(d, C.byref(ev))              # blocks until the window list changes
+        scan = ev.type == PropertyNotify and ev.atom == a_list
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(0)

@@ -8,6 +8,7 @@ uninstall.sh            reverses install.sh (purge package, remove our rule, rem
 lib/common.sh           shared helpers: OS detection, manifest, checks, the step list
 versions.tsv            thinkRF builds this installer knows: version, build, sha256, URL
 rules/                  udev rule(s) install.sh adds
+desktop/                taskbar icon fix: window-icon helper, its autostart entry, corrected menu entry
 tests/smoke.sh          clean-container install → re-run → uninstall, on 22.04 / 24.04 / 26.04
 docs/                   reference, registers, thinkRF manuals
 ```
@@ -23,6 +24,13 @@ docs/                   reference, registers, thinkRF manuals
    - `apt-get install -y ./<deb>` — apt resolves dependencies; the package's `postinst` installs thinkRF's
      udev rule, makes `chrome-sandbox` setuid, reloads udev.
    - ModemManager rule (only if ModemManager is installed; `--no-modemmanager` skips it).
+   - Taskbar icon fix (always): the client (Electron) sets no window icon, so icon-from-window taskbars
+     (LXQt, XFCE) show a blank box, and it reports `WM_CLASS` `S1000_Client` while thinkRF's `.desktop` says
+     `StartupWMClass=spectraware-client`. Installs `desktop/spectraware-window-icon` (python3 + libX11 via
+     ctypes, stdlib only) started at login from `/etc/xdg/autostart`; it blocks on `_NET_CLIENT_LIST` changes and
+     sets `_NET_WM_ICON` (64 px thinkRF logo from the package) on matching windows. Works however the app is
+     launched (pins point at a `.desktop` path, so a wrapper launcher would be bypassed). Plus a copy of thinkRF's
+     menu entry with the right `StartupWMClass` in `/usr/local/share/applications/` (shadows the packaged one).
    - ufw rule for UDP 18331 replies (only with `--ethernet` and ufw enabled).
 5. **Confirm:** print the list; `[Y/n]`. `--yes` accepts, `--print-commands` prints and exits, no TTY → refuse.
 6. **Run** the steps, then **`--check`** (read-only): package version, udev rule, sandbox mode, ModemManager
@@ -32,7 +40,8 @@ docs/                   reference, registers, thinkRF manuals
 ## Trust model
 
 - Only thinkRF's package runs code as root (its `postinst`). The installer's own root actions are
-  `apt-get install`, copying one udev rule, `udevadm control --reload-rules`, and the optional ufw rule.
+  `apt-get install`, copying one udev rule and the three taskbar-icon files, `udevadm control --reload-rules`,
+  and the optional ufw rule. The icon helper runs as the desktop user, never as root.
 - The script never runs as root as a whole unless the user starts it that way; root steps go through `sudo`.
 - Downloads are HTTPS-only and checked against a sha256 pinned in this repo before apt sees them.
 - No credentials are needed or stored.

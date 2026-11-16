@@ -52,6 +52,9 @@ Derivatives (Mint, Pop!_OS…) are mapped by `UBUNTU_CODENAME`. Other releases n
 | `/usr/lib/spectraware/`, `/usr/bin/Spectraware` | thinkRF package | app (Electron client + Qt server) |
 | `/etc/udev/rules.d/99-thinkrf.rules` | thinkRF package | USB `3830:5301` → mode 0666 + `uaccess` |
 | `/etc/udev/rules.d/70-thinkrf-modemmanager.rules` | `install.sh` (if ModemManager present) | ModemManager ignores the R6000's serial port |
+| `/usr/local/lib/spectraware/spectraware-window-icon` | `install.sh` | sets the thinkRF logo as SpectraWare's window icon |
+| `/etc/xdg/autostart/spectraware-window-icon.desktop` | `install.sh` | starts that helper at each login |
+| `/usr/local/share/applications/spectraware.desktop` | `install.sh` | thinkRF's menu entry with `StartupWMClass=S1000_Client` |
 | ufw rule `allow proto udp from any port 18331` | `install.sh --ethernet` | lets discovery replies in |
 | `~/.cache/spectraware/` | `install.sh` | downloaded `.deb` (kept for re-runs) |
 
