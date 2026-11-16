@@ -4,7 +4,7 @@ Newest first. `### RM-NNN — title · status (date)`. Shares a counter with `is
 
 ## Resume here
 
-RM-001: answer the design questions, then plan the installer (plan mode, register it in `plans/README.md`).
+RM-001: Corey answers the 4 open questions in [plans/rm-001-installer.md](plans/rm-001-installer.md), then build Phase 1.
 
 ### RM-001 — bootstrap installer for SpectraWare on Ubuntu · planned (2026-11-16)
 
