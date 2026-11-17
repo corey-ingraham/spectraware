@@ -9,6 +9,10 @@
 # Needs podman (or docker). No USB device or desktop is needed: the check skips those.
 set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+echo "=== profiles"
+python3 -I "$REPO/tests/check-profiles.py"
+python3 -I "$REPO/tools/make-profiles.py" --check
 ENGINE="$(command -v podman || command -v docker || true)"
 [ -n "$ENGINE" ] || { echo "needs podman or docker" >&2; exit 2; }
 

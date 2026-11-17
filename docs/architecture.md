@@ -9,7 +9,10 @@ lib/common.sh           shared helpers: OS detection, manifest, checks, the step
 versions.tsv            thinkRF builds this installer knows: version, build, sha256, URL
 rules/                  udev rule(s) install.sh adds
 desktop/                taskbar icon fix: window-icon helper, its autostart entry, corrected menu entry
-tests/smoke.sh          clean-container install → re-run → uninstall, on 22.04 / 24.04 / 26.04
+profiles/               SpectraWare settings files (File → Load Settings); wifi-* are real saves, the rest generated
+tools/make-profiles.py  dev-only: generates profiles from wifi-2g4.json (python3 stdlib; not needed to install)
+tests/smoke.sh          profile checks, then clean-container install → re-run → uninstall, on 22.04 / 24.04 / 26.04
+tests/check-profiles.py profile sanity checks (range, markers, naming); also run in CI
 docs/                   reference, registers, thinkRF manuals
 ```
 

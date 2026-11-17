@@ -14,6 +14,8 @@ How to set up SpectraWare (R6000, 9 kHz–8 GHz, 100 MHz instantaneous bandwidth
 - The orange **Preset** button resets to factory defaults; it does not load your profiles.
 - **Ready-made profiles are in [`profiles/`](../profiles/)** in this repo: **File → Load Settings** → open
   `<repo>/profiles/` → pick one. They load on any R6000. Load one, then adjust and save your own copy.
+- Other signals (key fobs, LoRa / Z-Wave, Zigbee, ADS-B, DECT, cellular, FM, FPV), the naming
+  convention and which antenna to use: [signals.md](signals.md).
 
 ## The profiles
 
@@ -23,7 +25,7 @@ How to set up SpectraWare (R6000, 9 kHz–8 GHz, 100 MHz instantaneous bandwidth
 | `wifi-5g.json` | 5150 → 5900 | 5525 / 750 | swept |
 | `wifi-6g.json` | 5925 → 7125 | 6525 / 1200 | swept; only Wi-Fi 6E/7 devices transmit here |
 | `wifi-all.json` | 2390 → 7125 | 4757.5 / 4735 | swept, slowest refresh; overview, then switch to one band |
-| `bluetooth.json` | 2400 → 2484 | 2442 / 84 | one capture; markers on the BLE advertising channels — see [Bluetooth](#bluetooth) |
+| `bluetooth-2g4.json` | 2400 → 2484 | 2442 / 84 | one capture; markers on the BLE advertising channels — see [Bluetooth](#bluetooth) |
 
 Build `wifi-2g4` first (below), save it, then change only Start/Stop and **Save Settings** under each new
 name. Everything else carries over.
@@ -55,7 +57,7 @@ To size a channel: **Occupied Bandwidth** over the hump → ~20, 40, 80 or 160 M
 
 ## Bluetooth
 
-Bluetooth shares the 2.4 GHz band with Wi-Fi, so `wifi-2g4` shows it too; `bluetooth.json` is the same
+Bluetooth shares the 2.4 GHz band with Wi-Fi, so `wifi-2g4` shows it too; `bluetooth-2g4.json` is the same
 setup trimmed to Bluetooth's range (2402–2480 MHz) with three markers on the Max Hold trace at the
 BLE advertising channels.
 

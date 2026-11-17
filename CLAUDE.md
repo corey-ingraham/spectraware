@@ -15,6 +15,7 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 | [docs/roadmap.md](docs/roadmap.md) | planned work (`RM-NNN`) — **resume here** |
 | [docs/plans/README.md](docs/plans/README.md) | plan register (design artifacts) |
 | [docs/wifi.md](docs/wifi.md) | Wi-Fi + Bluetooth monitoring; profiles in `profiles/` (File → Load Settings) |
+| [docs/signals.md](docs/signals.md) | other signal profiles, naming `<signal>-<band>[-<region>]`, antenna fit |
 | [docs/manuals/README.md](docs/manuals/README.md) | thinkRF User Guide, Programmer's Guide, Datasheet, streaming app note (PDF + text) |
 
 **Vendor manuals:** grep the `.txt` first, open the PDF for tables/figures —
@@ -56,6 +57,7 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 | Lint | `shellcheck -x install.sh uninstall.sh lib/common.sh tests/smoke.sh` |
 | Container test | `tests/smoke.sh [--debs DIR] [ubuntu:24.04 ...]` (podman) |
 | Device on USB? | `lsusb -d 3830:5301` |
+| Add / change a profile | row in `tools/make-profiles.py` → run it → `python3 -I tests/check-profiles.py` |
 | Add a SpectraWare release | new rows at top of `versions.tsv` (sha256 of thinkRF's file) → smoke test |
 
 ## Applied Learning
@@ -75,6 +77,7 @@ and runs `./install.sh`; it fetches thinkRF's official package, verifies it, and
 - Crash cause is in core dump strings: server log ring buffer survives there.
 - Containers see host `/sys` USB devices but not `/dev/bus/usb` nodes.
 - `.deb` exceeds GitHub's 100 MB file limit — never commit it.
+- Real SpectraWare saves store the axis as float32 — compare with tolerance, never equality.
 
 ## Response Style
 

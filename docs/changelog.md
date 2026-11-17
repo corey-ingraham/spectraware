@@ -2,6 +2,16 @@
 
 Newest first. `## YYYY-MM-DD — title [RM-NNN / ISSUE-NNN]`
 
+## 2026-11-16 — signal profiles beyond Wi-Fi [RM-006]
+
+- [profiles/](../profiles/): 13 new profiles (FM, 315/433 remotes, 868/915 IoT, ADS-B, DECT EU/US, Zigbee,
+  cellular low/mid/C-band, FPV 5.8). Naming `<signal>-<band>[-<region>]`; `bluetooth.json` renamed
+  `bluetooth-2g4.json`.
+- [tools/make-profiles.py](../tools/make-profiles.py): generates them from `wifi-2g4.json`;
+  [tests/check-profiles.py](../tests/check-profiles.py) validates all profiles (CI + smoke test).
+- [signals.md](signals.md): profile table, what each signal looks like, antenna fit, direction finding,
+  active-antenna overload limits.
+
 ## 2026-11-16 — ready-made profiles: Wi-Fi 2.4/5/6/all + Bluetooth
 
 - [profiles/](../profiles/): SpectraWare Save Settings files, load with File → Load Settings on any R6000.

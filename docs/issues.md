@@ -1,7 +1,7 @@
 # Issues
 
 Newest first. `### ISSUE-NNN — title · status (date)` · status ∈ {planned, in-progress, done, deferred}.
-`ISSUE-NNN` and `RM-NNN` share one counter — next free: **006**. (002 was withdrawn: not a SpectraWare issue.)
+`ISSUE-NNN` and `RM-NNN` share one counter — next free: **007**. (002 was withdrawn: not a SpectraWare issue.)
 
 ### ISSUE-005 — SpectraWare crashes when the R6000 is behind a USB hub chip · done (2026-11-16)
 

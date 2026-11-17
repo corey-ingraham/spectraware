@@ -50,8 +50,11 @@ Prefer to run it yourself? `./install.sh --print-commands` prints the commands a
 
 ## Using it
 
-Watching Wi-Fi (2.4, 5, 6 GHz) and Bluetooth, with ready-made profiles in [profiles/](profiles/)
-(File → Load Settings): [docs/wifi.md](docs/wifi.md).
+Ready-made profiles in [profiles/](profiles/) (File → Load Settings):
+
+- Wi-Fi (2.4, 5, 6 GHz) and Bluetooth: [docs/wifi.md](docs/wifi.md).
+- Key fobs, LoRa / Z-Wave, Zigbee, aircraft (ADS-B), DECT, cellular, FM, FPV drones, plus which
+  antenna each needs: [docs/signals.md](docs/signals.md).
 
 ## Troubleshooting
 

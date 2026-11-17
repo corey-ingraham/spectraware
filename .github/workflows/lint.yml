@@ -14,5 +14,7 @@ jobs:
       - name: versions.tsv is well-formed
         run: |
           grep -v '^#' versions.tsv | awk -F'\t' 'NF!=4 || $3 !~ /^[0-9a-f]{64}$/ || $4 !~ /^https:\/\// {print "bad row " NR ": " $0; bad=1} END {exit bad}'
+      - name: profiles are valid and generated files are current
+        run: python3 -I tests/check-profiles.py && python3 -I tools/make-profiles.py --check
       - name: --print-commands runs on a clean runner
         run: ./install.sh --print-commands
